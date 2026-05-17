@@ -75,8 +75,19 @@
 {#if cargando}
   <p class="t-caption">Cargando…</p>
 {:else}
-  <header>
-    <h1 class="titulo">Ajustes</h1>
+  <header class="ed-page-head">
+    <div>
+      <p class="ed-eyebrow">CAPÍTULO · CONFIGURACIÓN</p>
+      <h1 class="ed-page-head__title"><em>Ajustes</em></h1>
+    </div>
+    <div class="ed-page-head__meta">
+      <span class="ed-mark">VOL · I</span>
+      <span class="ed-mark">SECCIÓN 99</span>
+    </div>
+    <p class="ed-page-head__lede">
+      Tu estación de color, tipo de figura y forma de rostro. Estos tres datos
+      sostienen el resto del sistema. Quedan guardados en este dispositivo.
+    </p>
   </header>
 
   <section class="bloque">
@@ -154,10 +165,7 @@
 {#if toast}<div class="toast">{toast}</div>{/if}
 
 <style>
-  .titulo {
-    font-family: var(--font-serif); font-size: clamp(40px, 6vw, 64px);
-    font-weight: var(--weight-medium); margin: 0 0 var(--space-9);
-  }
+  /* (Cabecera ahora usa .ed-page-head global) */
 
   .bloque { margin-bottom: var(--space-11); }
   .bloque__title {

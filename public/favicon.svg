@@ -1,9 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <circle cx="16" cy="16" r="14" fill="#F5F1EA" stroke="#2A2825" stroke-width="1"/>
-  <text x="16" y="22" text-anchor="middle"
+  <rect width="32" height="32" fill="#F5F1EA"/>
+  <text x="16" y="25"
+        text-anchor="middle"
         font-family="Cormorant Garamond, Georgia, serif"
         font-style="italic"
         font-weight="500"
-        font-size="20"
-        fill="#B97A57">e</text>
+        font-size="28"
+        fill="#2A2825">e</text>
+  <circle cx="23.5" cy="23" r="1.4" fill="#B97A57"/>
 </svg>

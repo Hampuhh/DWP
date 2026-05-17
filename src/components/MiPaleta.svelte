@@ -45,12 +45,20 @@
   }
 </script>
 
-<header class="cabecera">
-  <p class="t-eyebrow">TU COLUMNA VERTEBRAL CROMÁTICA</p>
-  <h1 class="cabecera__title">Mi <em>paleta</em> personal</h1>
+<header class="ed-page-head">
+  <div>
+    <p class="ed-eyebrow">CAPÍTULO · ESENCIALES</p>
+    <h1 class="ed-page-head__title">Mi <em>paleta</em> personal</h1>
+  </div>
+  <div class="ed-page-head__meta">
+    <span class="ed-mark">VOL · I</span>
+    <span class="ed-mark">SECCIÓN 03</span>
+  </div>
+  <p class="ed-page-head__lede">
+    Tu columna vertebral cromática. La estación que determina los neutros que
+    sostienen, los acentos que vibran y el statement que firma cada salida.
+  </p>
 </header>
-
-<hr class="hr-hair" style="margin: var(--space-7) 0;" />
 
 {#if cargando}
   <p class="t-caption">Cargando…</p>
@@ -159,12 +167,7 @@
 {#if toast}<div class="toast">{toast}</div>{/if}
 
 <style>
-  .cabecera__title {
-    font-family: var(--font-serif); font-size: clamp(40px, 7vw, 72px);
-    font-weight: var(--weight-medium); line-height: 0.98;
-    margin: var(--space-3) 0 0;
-  }
-  .cabecera__title :global(em) { font-style: italic; color: var(--color-terracota); }
+  /* (Cabecera ahora usa .ed-page-head global) */
 
   .sin-perfil {
     border: var(--border-dashed); padding: var(--space-9);

@@ -3,27 +3,32 @@ import { Shirt, Sparkles, Palette, ArrowUpRight } from '@lucide/svelte';
 
 interface Props {
   href: string;
-  eyebrow: string;
+  numero: string;
   titulo: string;
   descripcion: string;
   iconName: 'shirt' | 'sparkles' | 'palette';
+  cat?: string;
+  dark?: boolean;
 }
 
-const { href, eyebrow, titulo, descripcion, iconName } = Astro.props;
+const { href, numero, titulo, descripcion, iconName, cat, dark = false } = Astro.props;
 
 const iconMap = { shirt: Shirt, sparkles: Sparkles, palette: Palette } as const;
 const Icon = iconMap[iconName];
 ---
 
-<a class="entry" href={href}>
-  <div class="entry__head">
-    <span class="entry__eyebrow">{eyebrow}</span>
-    <ArrowUpRight size={22} strokeWidth={1.4} />
+<a class={`entry ${dark ? 'entry--dark' : ''}`} href={href}>
+  <header class="entry__head">
+    <span class="entry__num">{numero}</span>
+    <span class="entry__arrow"><ArrowUpRight size={26} strokeWidth={1.2} /></span>
+  </header>
+
+  <div class="entry__icon-block">
+    <Icon size={64} strokeWidth={1.0} />
   </div>
-  <div class="entry__icon">
-    <Icon size={48} strokeWidth={1.2} />
-  </div>
+
   <div class="entry__body">
+    {cat && <span class="entry__cat">{cat}</span>}
     <h3 class="entry__title">{titulo}</h3>
     <p class="entry__desc">{descripcion}</p>
   </div>
@@ -31,45 +36,81 @@ const Icon = iconMap[iconName];
 
 <style>
   .entry {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: var(--space-9);
-    padding: var(--space-8);
-    min-height: 320px;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: var(--space-7);
+    padding: var(--space-9) var(--space-8) var(--space-8);
     background: var(--color-marfil);
-    border: var(--border-hairline);
     color: var(--color-negro);
     text-decoration: none;
+    border: none;
+    min-height: 480px;
+    position: relative;
     transition: background var(--motion-base), color var(--motion-base);
   }
-  .entry:hover { background: var(--color-negro); color: var(--color-marfil); }
-  .entry:hover .entry__eyebrow,
-  .entry:hover .entry__desc { color: var(--color-marfil); opacity: 0.7; }
+  .entry:hover { background: var(--color-crema); }
+  .entry:hover .entry__title { color: var(--color-terracota); }
+
+  .entry--dark {
+    background: var(--color-tinta);
+    color: var(--color-marfil);
+  }
+  .entry--dark:hover { background: #000; }
+  .entry--dark:hover .entry__title,
+  .entry--dark .entry__title { color: var(--color-marfil); }
+  .entry--dark:hover .entry__title { color: var(--color-terracota-soft); }
 
   .entry__head {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-bottom: var(--space-5);
+    border-bottom: 1px solid currentColor;
+    opacity: 0.85;
   }
-  .entry__eyebrow {
+  .entry__num {
     font-family: var(--font-mono);
-    font-size: var(--type-mono-size);
-    letter-spacing: var(--tracking-wide);
-    color: var(--color-negro-45);
+    font-size: 13px;
+    letter-spacing: 0.32em;
   }
-  .entry__icon { color: currentColor; opacity: 0.9; }
+  .entry__arrow { display: flex; }
+
+  .entry__icon-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: currentColor;
+    opacity: 0.7;
+    padding: var(--space-7) 0;
+  }
+
+  .entry__cat {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--color-negro-45);
+    display: block;
+    margin-bottom: var(--space-3);
+  }
+  .entry--dark .entry__cat { color: var(--color-terracota-soft); }
+
   .entry__title {
     font-family: var(--font-serif);
-    font-size: var(--type-h4-size);
+    font-size: clamp(28px, 3vw, 36px);
+    line-height: 1.05;
     font-weight: var(--weight-medium);
-    margin: 0 0 var(--space-2);
+    letter-spacing: -0.005em;
+    margin: 0 0 var(--space-3);
+    transition: color var(--motion-base);
   }
+
   .entry__desc {
     font-family: var(--font-sans);
-    font-size: var(--type-body-sm-size);
-    line-height: 1.55;
+    font-size: 14px;
+    line-height: 1.6;
     color: var(--color-negro-60);
     margin: 0;
   }
+  .entry--dark .entry__desc { color: rgba(245, 241, 234, 0.72); }
 </style>

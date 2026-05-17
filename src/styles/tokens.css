@@ -18,6 +18,12 @@
   --color-terracota-soft:   #C9967A;
   --color-terracota-deep:   #A86A48;
 
+  /* ── COLOR · editorial (Diablo viste a la moda) ────────── */
+  --color-tinta:            #0B0A09;   /* Negro azabache · fondos editoriales */
+  --color-bone:             #EFE9DE;   /* Bone · alternativa al marfil */
+  --color-rojo:             #A4151D;   /* Rojo Hermès · CTA crítico, reservado */
+  --color-rojo-deep:        #7A0F15;
+
   /* ── COLOR · alfas ─────────────────────────────────────── */
   --color-negro-60:    rgba(42, 40, 37, 0.60);
   --color-negro-45:    rgba(42, 40, 37, 0.45);
@@ -29,6 +35,11 @@
   --font-mono:  'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* ── TIPOGRAFÍA · escala ───────────────────────────────── */
+  /* Escala editorial: la portada va MUY grande, los heads más medidos */
+  --type-cover-size:     clamp(80px, 14vw, 220px);
+  --type-cover-lh:       0.86;
+  --type-magazine-size:  clamp(56px, 9vw, 160px);
+  --type-magazine-lh:    0.9;
   --type-display-size:   96px;   --type-display-lh:   0.98;
   --type-h1-size:        64px;   --type-h1-lh:        0.98;
   --type-h2-size:        44px;   --type-h2-lh:        1.0;

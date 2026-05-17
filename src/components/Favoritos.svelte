@@ -34,13 +34,32 @@
   }
 </script>
 
+<header class="ed-page-head">
+  <div>
+    <p class="ed-eyebrow">CAPÍTULO · MI ESPACIO</p>
+    <h1 class="ed-page-head__title">Mis <em>favoritos</em></h1>
+  </div>
+  <div class="ed-page-head__meta">
+    <span class="ed-mark">VOL · I</span>
+    <span class="ed-mark">SECCIÓN 04</span>
+    <span class="ed-mark">{outfits.length.toString().padStart(2, '0')} OUTFITS</span>
+  </div>
+  <p class="ed-page-head__lede">
+    Una colección de los outfits que ya te han funcionado, guardados desde el
+    generador o marcados como usados.
+  </p>
+</header>
+
 <section class="filtros">
-  <button class="chip {filtroContexto === 'todos' ? 'is-active' : ''}" onclick={() => filtroContexto = 'todos'}>Todos</button>
-  {#each contextosArray as c}
-    <button class="chip {filtroContexto === c.id ? 'is-active' : ''}" onclick={() => filtroContexto = c.id}>
-      {c.nombre}
-    </button>
-  {/each}
+  <p class="ed-eyebrow">FILTRAR POR CONTEXTO</p>
+  <div class="filtros__chips">
+    <button class="chip {filtroContexto === 'todos' ? 'is-active' : ''}" onclick={() => filtroContexto = 'todos'}>Todos</button>
+    {#each contextosArray as c}
+      <button class="chip {filtroContexto === c.id ? 'is-active' : ''}" onclick={() => filtroContexto = c.id}>
+        {c.nombre}
+      </button>
+    {/each}
+  </div>
 </section>
 
 <hr class="hr-hair" style="margin: var(--space-7) 0;" />
@@ -94,7 +113,8 @@
 {/if}
 
 <style>
-  .filtros { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+  .filtros { display: flex; flex-direction: column; gap: var(--space-3); margin-bottom: var(--space-9); }
+  .filtros__chips { display: flex; gap: var(--space-2); flex-wrap: wrap; }
 
   .empty {
     border: var(--border-dashed); padding: var(--space-9);

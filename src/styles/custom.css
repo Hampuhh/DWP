@@ -303,3 +303,266 @@ starlight-theme-select select,
 @media (min-width: 72rem) {
   .main-frame > .lg\:sl-flex { grid-template-columns: var(--sl-sidebar-width) auto; }
 }
+
+/* ────────────────────────────────────────────────────────────
+   ESTILO EDITORIAL — "Diablo viste a la moda"
+   ──────────────────────────────────────────────────────────── */
+
+/* ── Tipografía editorial — clases utilitarias ───────────── */
+
+.ed-cover {
+  font-family: var(--font-serif);
+  font-size: var(--type-cover-size);
+  line-height: var(--type-cover-lh);
+  letter-spacing: -0.015em;
+  font-weight: var(--weight-medium);
+  color: var(--color-negro);
+}
+.ed-magazine {
+  font-family: var(--font-serif);
+  font-size: var(--type-magazine-size);
+  line-height: var(--type-magazine-lh);
+  letter-spacing: -0.01em;
+  font-weight: var(--weight-medium);
+}
+
+.ed-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-negro-60);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.ed-eyebrow::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--color-negro);
+}
+
+.ed-mark {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-negro-45);
+}
+
+.ed-roman {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: var(--weight-regular);
+  color: var(--color-terracota);
+}
+
+/* ── Drop cap — primer carácter como en portada de revista ── */
+.ed-dropcap::first-letter {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 5.4em;
+  line-height: 0.82;
+  float: left;
+  padding: 0.05em 0.18em 0 0;
+  color: var(--color-terracota);
+  font-weight: var(--weight-medium);
+}
+
+/* ── Cita pull-quote con hairlines arriba/abajo ──────────── */
+.ed-pullquote {
+  border-top: 1px solid var(--color-negro);
+  border-bottom: 1px solid var(--color-negro);
+  padding: var(--space-9) var(--space-7);
+  margin: var(--space-12) 0;
+  text-align: center;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(22px, 3.4vw, 36px);
+  line-height: 1.32;
+  color: var(--color-negro);
+  max-width: 56rem;
+  margin-inline: auto;
+}
+.ed-pullquote em { font-style: normal; color: var(--color-terracota); }
+.ed-pullquote cite {
+  display: block;
+  margin-top: var(--space-5);
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-negro-60);
+}
+
+/* ── Sello editorial (footer mark de cada página) ───────── */
+.ed-stamp {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-6);
+  margin-top: var(--space-13);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-linea);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-negro-60);
+}
+.ed-stamp__brand em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  letter-spacing: 0;
+  font-size: 14px;
+  color: var(--color-terracota);
+  text-transform: lowercase;
+}
+
+/* ── Counters Romanos automáticos por sección ──────────── */
+.ed-counter { counter-reset: ed-sec; }
+.ed-counter > [data-roman]::before {
+  counter-increment: ed-sec;
+  content: counter(ed-sec, upper-roman) ' — ';
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--color-terracota);
+  font-weight: var(--weight-regular);
+}
+
+/* ── Tarjeta editorial (situación) ─────────────────────── */
+.ed-tile {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: var(--space-5);
+  padding: var(--space-7);
+  background: var(--color-marfil);
+  color: var(--color-negro);
+  text-decoration: none;
+  border: none;
+  min-height: 240px;
+  overflow: hidden;
+  transition: background var(--motion-base);
+}
+.ed-tile:hover { background: var(--color-crema); }
+.ed-tile__num {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 28px;
+  color: var(--color-terracota);
+  line-height: 1;
+}
+.ed-tile__title {
+  font-family: var(--font-serif);
+  font-size: clamp(22px, 2.6vw, 30px);
+  line-height: 1.05;
+  font-weight: var(--weight-medium);
+  letter-spacing: -0.005em;
+  margin: 0;
+  color: var(--color-negro);
+}
+.ed-tile__title em { font-style: italic; color: var(--color-terracota); }
+.ed-tile__desc {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--color-negro-60);
+  margin: 0;
+  max-width: 28ch;
+}
+.ed-tile__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--color-negro);
+  opacity: 0.85;
+}
+.ed-tile__cat {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-negro-45);
+}
+.ed-tile:hover .ed-tile__title { color: var(--color-terracota); }
+
+/* ── Tile inverso (negro azabache) ─────────────────────── */
+.ed-tile--dark {
+  background: var(--color-tinta);
+  color: var(--color-marfil);
+}
+.ed-tile--dark:hover { background: #000; }
+.ed-tile--dark .ed-tile__title,
+.ed-tile--dark .ed-tile__title em,
+.ed-tile--dark:hover .ed-tile__title { color: var(--color-marfil); }
+.ed-tile--dark .ed-tile__desc { color: rgba(245, 241, 234, 0.75); }
+.ed-tile--dark .ed-tile__num,
+.ed-tile--dark .ed-tile__cat { color: var(--color-terracota-soft); }
+.ed-tile--dark .ed-tile__foot { opacity: 1; }
+
+/* ── Cabecera editorial reutilizable para cualquier página ─ */
+.ed-page-head {
+  margin: 0 0 var(--space-11);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: var(--space-7);
+  padding-bottom: var(--space-7);
+  border-bottom: 1px solid var(--color-linea);
+}
+.ed-page-head__title {
+  font-family: var(--font-serif);
+  font-size: var(--type-magazine-size);
+  line-height: var(--type-magazine-lh);
+  letter-spacing: -0.01em;
+  font-weight: var(--weight-medium);
+  margin: var(--space-4) 0 0;
+  color: var(--color-negro);
+}
+.ed-page-head__title em { font-style: italic; color: var(--color-terracota); }
+.ed-page-head__meta {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.ed-page-head__lede {
+  grid-column: 1 / -1;
+  margin: var(--space-5) 0 0;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-negro-60);
+  max-width: 36rem;
+}
+@media (max-width: 640px) {
+  .ed-page-head {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+  .ed-page-head__meta { text-align: left; }
+}
+
+/* ── Rule editorial (separador entre secciones) ──────────── */
+.ed-rule {
+  border: none;
+  height: 1px;
+  background: var(--color-negro);
+  margin: var(--space-12) 0 var(--space-9);
+  position: relative;
+}
+.ed-rule[data-num]::after {
+  content: attr(data-num);
+  position: absolute;
+  top: -22px;
+  left: 0;
+  background: var(--color-marfil);
+  padding-right: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  color: var(--color-negro-45);
+}

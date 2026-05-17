@@ -1,11 +1,28 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Editorial cover icon — full bleed marfil + italic 'e' + dot terracota -->
   <rect width="512" height="512" fill="#F5F1EA"/>
-  <circle cx="256" cy="256" r="220" fill="none" stroke="#2A2825" stroke-width="6"/>
-  <text x="256" y="340"
+
+  <!-- Hairline border editorial (1px) — restado del bleed para no caer en el squircle de iOS -->
+  <rect x="32" y="32" width="448" height="448" fill="none" stroke="#2A2825" stroke-width="1.5" stroke-opacity="0.18"/>
+
+  <!-- Italic 'e' gigante, Cormorant Garamond, ligera caída visual -->
+  <text x="256" y="358"
         text-anchor="middle"
         font-family="Cormorant Garamond, Georgia, serif"
         font-style="italic"
         font-weight="500"
-        font-size="320"
-        fill="#B97A57">e</text>
+        font-size="380"
+        fill="#2A2825">e</text>
+
+  <!-- Dot terracota — acento editorial -->
+  <circle cx="376" cy="340" r="11" fill="#B97A57"/>
+
+  <!-- Sello editorial pequeño en mono — apenas perceptible -->
+  <text x="256" y="448"
+        text-anchor="middle"
+        font-family="JetBrains Mono, Menlo, monospace"
+        font-size="18"
+        letter-spacing="6"
+        fill="#2A2825"
+        fill-opacity="0.55">VOL · I</text>
 </svg>

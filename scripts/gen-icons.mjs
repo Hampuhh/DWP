@@ -24,12 +24,13 @@ const OUT_DIR = 'public/icons';
 if (!existsSync(OUT_DIR)) await mkdir(OUT_DIR, { recursive: true });
 
 const svgBuffer = await readFile('public/icon.svg');
-// Versión "maskable": el icono ocupa ~80% del lienzo, con padding para safe area
+// Versión "maskable": el icono ocupa ~70% del lienzo, con padding para safe area
 const svgMaskable = (await readFile('public/icon.svg', 'utf8'))
-  // Reduce el círculo y la "e" un 20 % para dejar safe area
-  .replace('r="220"', 'r="176"')
-  .replace('font-size="320"', 'font-size="256"')
-  .replace('y="340"', 'y="324"');
+  // Reduce la "e" para dejar safe area; mueve verticalmente para centrar el bloque
+  .replace('font-size="380"', 'font-size="300"')
+  .replace('y="358"', 'y="338"')
+  .replace('cx="376" cy="340" r="11"', 'cx="350" cy="324" r="9"')
+  .replace('font-size="18"', 'font-size="14"');
 
 for (const { name, size, maskable } of SIZES) {
   const input = maskable ? Buffer.from(svgMaskable) : svgBuffer;

@@ -209,9 +209,24 @@
   }
 </script>
 
-<!-- Selector de contexto -->
-<header class="cabecera">
-  <p class="t-eyebrow">¿QUÉ PLAN TIENES?</p>
+<!-- Cabecera editorial + selector de contexto -->
+<header class="ed-page-head">
+  <div>
+    <p class="ed-eyebrow">CAPÍTULO · MI ESPACIO</p>
+    <h1 class="ed-page-head__title"><em>Generador</em> de outfits</h1>
+  </div>
+  <div class="ed-page-head__meta">
+    <span class="ed-mark">VOL · I</span>
+    <span class="ed-mark">SECCIÓN 02</span>
+  </div>
+  <p class="ed-page-head__lede">
+    Eliges un plan; el sistema lee tu closet, aplica reglas cromáticas y propone
+    una combinación coherente con tu paleta personal.
+  </p>
+</header>
+
+<section class="contextos-bloque">
+  <p class="ed-eyebrow">¿QUÉ PLAN TIENES?</p>
   <div class="contextos">
     {#each contextosArray as c}
       <button
@@ -221,7 +236,7 @@
       </button>
     {/each}
   </div>
-</header>
+</section>
 
 <hr class="hr-hair" style="margin: var(--space-7) 0;" />
 
@@ -333,7 +348,8 @@
 {#if toast}<div class="toast">{toast}</div>{/if}
 
 <style>
-  .cabecera p { margin: 0; }
+  .contextos-bloque { margin: var(--space-7) 0 var(--space-9); }
+  .contextos-bloque .ed-eyebrow { margin-bottom: var(--space-4); display: inline-flex; }
   .contextos {
     display: flex; gap: var(--space-2); flex-wrap: wrap;
     margin-top: var(--space-4);

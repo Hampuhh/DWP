@@ -280,6 +280,25 @@
 </script>
 
 <!-- ────────────────────────────────────────────────── -->
+<!-- Cabecera editorial -->
+<!-- ────────────────────────────────────────────────── -->
+<header class="ed-page-head">
+  <div>
+    <p class="ed-eyebrow">CAPÍTULO · MI ESPACIO</p>
+    <h1 class="ed-page-head__title">Mi <em>closet</em></h1>
+  </div>
+  <div class="ed-page-head__meta">
+    <span class="ed-mark">VOL · I</span>
+    <span class="ed-mark">SECCIÓN 01</span>
+    <span class="ed-mark">{prendas.length.toString().padStart(2, '0')} PIEZAS</span>
+  </div>
+  <p class="ed-page-head__lede">
+    Tu armario, una pieza a la vez. Cada prenda con foto, color detectado
+    automáticamente, ocasión y contador de usos. Todo guardado en este dispositivo.
+  </p>
+</header>
+
+<!-- ────────────────────────────────────────────────── -->
 <!-- Toolbar -->
 <!-- ────────────────────────────────────────────────── -->
 <header class="toolbar">

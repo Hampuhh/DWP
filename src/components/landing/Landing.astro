@@ -1,177 +1,361 @@
 ---
-import {
-  Coffee, Sun, Heart, Cake, Flower2, Plane, Film, UtensilsCrossed,
-  Shirt, Sparkles, Palette,
-} from '@lucide/svelte';
 import SituationCard from './SituationCard.astro';
 import EntryCard from './EntryCard.astro';
 
+const fechaEdicion = new Date().toLocaleDateString('es', {
+  month: 'long',
+  year: 'numeric',
+});
+
 const situaciones = [
-  { slug: 'cafe',     titulo: 'Café o almuerzo', descripcion: 'Algo cómodo, pulido sin esfuerzo.', icon: 'coffee' },
-  { slug: 'dia',      titulo: 'Día a día',       descripcion: 'Tu uniforme silencioso.',            icon: 'sun' },
-  { slug: 'cita',     titulo: 'Una cita',        descripcion: 'Sutil, intencional, tú.',           icon: 'heart' },
-  { slug: 'cena',     titulo: 'Cena o cumpleaños', descripcion: 'Elegancia sin estridencia.',      icon: 'cake' },
-  { slug: 'boda',     titulo: 'Una boda',        descripcion: 'Cocktail o ceremonia, sin robar foco.', icon: 'flower' },
-  { slug: 'viaje',    titulo: 'Un viaje',        descripcion: 'Mínima maleta, máximas combinaciones.', icon: 'plane' },
-  { slug: 'cine',     titulo: 'Cine o paseo',    descripcion: 'Casual con intención.',             icon: 'film' },
-  { slug: 'brunch',   titulo: 'Brunch',          descripcion: 'Luz natural, paleta serena.',       icon: 'utensils' },
+  { slug: 'cafe',    titulo: 'Café o almuerzo',    descripcion: 'Algo cómodo, pulido sin esfuerzo.',         icon: 'coffee',   cat: 'Casual' },
+  { slug: 'dia',     titulo: 'Día a día',           descripcion: 'Tu uniforme silencioso.',                    icon: 'sun',      cat: 'Casual' },
+  { slug: 'cita',    titulo: 'Una cita',            descripcion: 'Sutil, intencional, tú.',                    icon: 'heart',    cat: 'Smart casual' },
+  { slug: 'cena',    titulo: 'Cena o cumpleaños',   descripcion: 'Elegancia sin estridencia.',                 icon: 'cake',     cat: 'Smart casual' },
+  { slug: 'boda',    titulo: 'Una boda',            descripcion: 'Cocktail o ceremonia, sin robar foco.',      icon: 'flower',   cat: 'Cocktail' },
+  { slug: 'viaje',   titulo: 'Un viaje',            descripcion: 'Mínima maleta, máximas combinaciones.',      icon: 'plane',    cat: 'Smart casual' },
+  { slug: 'cine',    titulo: 'Cine o paseo',        descripcion: 'Casual con intención.',                      icon: 'film',     cat: 'Casual' },
+  { slug: 'brunch',  titulo: 'Brunch',              descripcion: 'Luz natural, paleta serena.',                icon: 'utensils', cat: 'Smart casual' },
 ];
 ---
 
-<section class="hero">
-  <p class="hero__eyebrow">UNA GUÍA PERSONAL DE IMAGEN</p>
-  <h1 class="hero__title">
-    Tu estilo, <em>tu manera</em>.
+<!-- ──────────────────────────────────────────────────────── -->
+<!-- I. PORTADA — cover treatment                              -->
+<!-- ──────────────────────────────────────────────────────── -->
+<section class="cover">
+  <div class="cover__masthead">
+    <span class="ed-mark">EDICIÓN PERSONAL</span>
+    <span class="ed-mark cover__masthead-spine">VOL · I</span>
+    <span class="ed-mark cover__masthead-date">{fechaEdicion}</span>
+  </div>
+
+  <h1 class="cover__title">
+    Tu estilo,<br>
+    <span class="cover__title-em">tu manera.</span>
   </h1>
-  <p class="hero__lede">
-    Una plataforma íntima para conocer tu paleta, construir tu armario y vestirte
-    para cada momento sin esfuerzo. Todo guardado en tu dispositivo, solo para ti.
-  </p>
-</section>
 
-<hr class="hr-hair" />
-
-<section class="situaciones">
-  <header class="section-header">
-    <p class="t-eyebrow">PROPUESTA</p>
-    <h2>¿Qué planes tienes <em>hoy</em>?</h2>
-  </header>
-
-  <div class="grid-situaciones">
-    {situaciones.map((s) => <SituationCard {...s} />)}
+  <div class="cover__byline">
+    <p class="cover__lede">
+      Una guía privada para conocer tu paleta, construir tu armario y
+      vestirte con intención. <em>Tu closet, tu paleta, tus reglas</em> —
+      guardado en este dispositivo, jamás en ningún servidor.
+    </p>
+    <div class="cover__credits">
+      <span class="ed-mark">DENTRO</span>
+      <ul class="cover__credits-list">
+        <li><span class="cover__roman">I</span><span>Mi closet digital</span></li>
+        <li><span class="cover__roman">II</span><span>Generador de outfits</span></li>
+        <li><span class="cover__roman">III</span><span>Mi paleta personal</span></li>
+        <li><span class="cover__roman">IV</span><span>Las 12 estaciones</span></li>
+      </ul>
+    </div>
   </div>
 </section>
 
-<hr class="hr-hair" />
+<!-- ──────────────────────────────────────────────────────── -->
+<!-- II. PROPUESTA — asymmetric grid de situaciones            -->
+<!-- ──────────────────────────────────────────────────────── -->
+<hr class="ed-rule" data-num="II — PROPUESTA" />
 
-<section class="entradas">
-  <header class="section-header">
-    <p class="t-eyebrow">EMPIEZA POR AQUÍ</p>
-    <h2>¿Por dónde <em>empiezas</em>?</h2>
+<section class="proposal">
+  <header class="proposal__head">
+    <p class="ed-eyebrow">PARA HOY</p>
+    <h2 class="ed-magazine proposal__title">
+      ¿Qué planes tienes <em>hoy</em>?
+    </h2>
+    <p class="proposal__lede">
+      Toca el plan más cercano a lo que vas a hacer. Te abre una selección
+      curada con piezas de tu propio closet —si ya las catalogaste— o
+      sugerencias filtradas por código de vestimenta.
+    </p>
   </header>
 
-  <div class="grid-entradas">
+  <ol class="proposal__grid">
+    {situaciones.map((s, i) => (
+      <li class={`proposal__cell ${i === 0 ? 'is-feature' : ''} ${i === 5 ? 'is-dark' : ''}`}>
+        <SituationCard {...s} numero={String(i + 1).padStart(2, '0')} dark={i === 5} />
+      </li>
+    ))}
+  </ol>
+</section>
+
+<!-- ──────────────────────────────────────────────────────── -->
+<!-- III. PULL-QUOTE editorial                                 -->
+<!-- ──────────────────────────────────────────────────────── -->
+<blockquote class="ed-pullquote">
+  Vestir bien, mucho tiempo, las mismas piezas excelentes
+  <em>es el lujo silencioso</em> y la coherencia hecha forma.
+  <cite>El principio rector — Vol. I</cite>
+</blockquote>
+
+<!-- ──────────────────────────────────────────────────────── -->
+<!-- IV. ENTRADAS — 3 tiles editorial (con el del medio negro) -->
+<!-- ──────────────────────────────────────────────────────── -->
+<hr class="ed-rule" data-num="III — POR DÓNDE EMPEZAR" />
+
+<section class="entries">
+  <header class="entries__head">
+    <p class="ed-eyebrow">LA INFRAESTRUCTURA</p>
+    <h2 class="ed-magazine entries__title">
+      Tres puntos de <em>partida</em>.
+    </h2>
+  </header>
+
+  <div class="entries__grid">
     <EntryCard
       href="./mi-closet"
-      eyebrow="01"
+      numero="01"
       titulo="Mi closet digital"
-      descripcion="Cataloga cada prenda con foto, color y ocasión. Tu armario, en orden."
+      descripcion="Cataloga cada prenda con foto, color y ocasión. Una sola pantalla, ordenada por categoría, con contador de usos."
       iconName="shirt"
+      cat="Inventario"
     />
     <EntryCard
       href="./generador"
-      eyebrow="02"
-      titulo="Generar outfit"
-      descripcion="Elige un plan y deja que las reglas cromáticas y de contexto te propongan un look."
+      numero="02"
+      titulo="Generador de outfits"
+      descripcion="Eliges contexto, el sistema lee tu closet, aplica reglas cromáticas y propone una combinación que respeta tu paleta personal."
       iconName="sparkles"
+      cat="Decisión"
+      dark
     />
     <EntryCard
       href="./mi-paleta"
-      eyebrow="03"
+      numero="03"
       titulo="Mi paleta personal"
-      descripcion="Tu estación de color, neutros base, acentos y statement. La columna vertebral."
+      descripcion="Tu estación de color con neutros base, acentos y statement. La columna vertebral cromática de todo lo demás."
       iconName="palette"
+      cat="Fundamento"
     />
   </div>
 </section>
 
-<section class="principio card--dark">
-  <p class="t-eyebrow" style="color: var(--color-greige);">EL PRINCIPIO</p>
-  <p class="principio__texto">
-    Vestir bien, mucho tiempo, las mismas piezas excelentes
-    <em>es el lujo silencioso</em> y la coherencia hecha forma.
-  </p>
+<!-- ──────────────────────────────────────────────────────── -->
+<!-- V. CIERRE editorial                                       -->
+<!-- ──────────────────────────────────────────────────────── -->
+<section class="closing ed-counter">
+  <hr class="ed-rule" data-num="IV — CIERRE" />
+  <div class="closing__body">
+    <p class="ed-eyebrow">UN APUNTE FINAL</p>
+    <p class="closing__text ed-dropcap">
+      Empieza por una sola decisión: catalogar tres prendas que ya amas.
+      A partir de ahí, todo el resto se construye solo. La paleta, el
+      generador, los favoritos. Quince minutos esta semana, treinta el
+      mes que viene. El armario silencioso es <em>una práctica</em>,
+      no una compra.
+    </p>
+  </div>
 </section>
 
+<footer class="ed-stamp">
+  <span class="ed-stamp__brand"><em>estilo</em> · EDICIÓN PERSONAL</span>
+  <span>VOL · I · {fechaEdicion.toUpperCase()}</span>
+  <span>HECHO PARA TI · LOCAL</span>
+</footer>
+
 <style>
-  .hero {
-    padding: var(--space-13) 0 var(--space-12);
-    max-width: 60rem;
-    margin: 0 auto;
+  /* ── Cover layout ───────────────────────────────────────── */
+  .cover {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: var(--space-9);
+    padding: var(--space-12) 0 var(--space-13);
+    min-height: 78vh;
+    position: relative;
   }
-  .hero__eyebrow {
-    font-family: var(--font-sans);
-    font-size: var(--type-eyebrow-size);
-    font-weight: var(--weight-medium);
-    letter-spacing: var(--tracking-widest);
-    text-transform: uppercase;
-    color: var(--color-negro-60);
-    margin: 0 0 var(--space-7);
+
+  .cover__masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-6);
+    padding-bottom: var(--space-5);
+    border-bottom: 1px solid var(--color-negro);
   }
-  .hero__title {
+  .cover__masthead-spine {
+    color: var(--color-terracota);
+  }
+
+  .cover__title {
     font-family: var(--font-serif);
-    font-size: clamp(48px, 8vw, 96px);
-    line-height: 0.98;
-    letter-spacing: var(--tracking-tight);
+    font-size: var(--type-cover-size);
+    line-height: var(--type-cover-lh);
+    letter-spacing: -0.015em;
     font-weight: var(--weight-medium);
-    margin: 0 0 var(--space-7);
+    margin: 0;
     color: var(--color-negro);
   }
-  .hero__title em {
+  .cover__title-em {
+    font-style: italic;
+    color: var(--color-terracota);
+    margin-left: 0.05em;
+  }
+
+  .cover__byline {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: var(--space-9);
+    align-items: start;
+    padding-top: var(--space-7);
+    border-top: 1px solid var(--color-linea);
+  }
+  .cover__lede {
+    font-family: var(--font-serif);
+    font-size: clamp(18px, 1.8vw, 23px);
+    line-height: 1.5;
+    color: var(--color-negro);
+    margin: 0;
+    max-width: 38rem;
+  }
+  .cover__lede em {
     font-style: italic;
     color: var(--color-terracota);
   }
-  .hero__lede {
-    font-family: var(--font-sans);
-    font-size: var(--type-body-lg-size);
-    line-height: var(--type-body-lg-lh);
-    color: var(--color-negro-60);
-    max-width: 36rem;
-    margin: 0;
-  }
 
-  .section-header {
-    margin: var(--space-12) 0 var(--space-9);
-    max-width: 60rem;
+  .cover__credits {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
   }
-  .section-header h2 {
+  .cover__credits-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
     font-family: var(--font-serif);
-    font-size: clamp(32px, 5vw, 44px);
-    font-weight: var(--weight-medium);
-    line-height: 1.0;
-    letter-spacing: var(--tracking-snug);
-    margin: var(--space-3) 0 0;
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.4;
     color: var(--color-negro);
   }
-  .section-header h2 em { font-style: italic; color: var(--color-terracota); }
-
-  .grid-situaciones {
+  .cover__credits-list li {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 32px 1fr;
+    align-items: baseline;
+    gap: var(--space-3);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-linea-soft);
+  }
+  .cover__roman {
+    color: var(--color-terracota);
+    font-style: italic;
+    font-variant-numeric: oldstyle-nums;
+  }
+
+  @media (max-width: 840px) {
+    .cover__byline { grid-template-columns: 1fr; gap: var(--space-7); }
+    .cover { min-height: auto; padding: var(--space-9) 0 var(--space-11); }
+  }
+
+  /* ── Proposal layout ───────────────────────────────────── */
+  .proposal__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-bottom: var(--space-9);
+  }
+  .proposal__title {
+    margin: var(--space-2) 0 0;
+    color: var(--color-negro);
+  }
+  .proposal__title em { font-style: italic; color: var(--color-terracota); }
+  .proposal__lede {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--color-negro-60);
+    max-width: 38rem;
+    margin: var(--space-3) 0 0;
+  }
+
+  .proposal__grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    /* Asymmetric magazine spread: 6 cols x 2 rows */
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 220px;
     gap: 1px;
     background: var(--color-linea);
-    border: var(--border-hairline);
+    border: 1px solid var(--color-linea);
   }
-  .grid-entradas {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-6);
-    margin-bottom: var(--space-12);
+  .proposal__cell {
+    display: contents;
   }
+  /* Each tile occupies cells. Magazine layout: */
+  .proposal__cell:nth-child(1) :global(.ed-tile) { grid-column: span 3; grid-row: span 2; min-height: 100%; padding: var(--space-9); }
+  .proposal__cell:nth-child(2) :global(.ed-tile) { grid-column: span 3; }
+  .proposal__cell:nth-child(3) :global(.ed-tile) { grid-column: span 2; }
+  .proposal__cell:nth-child(4) :global(.ed-tile) { grid-column: span 1; }
+  .proposal__cell:nth-child(5) :global(.ed-tile) { grid-column: span 2; }
+  .proposal__cell:nth-child(6) :global(.ed-tile) { grid-column: span 2; }
+  .proposal__cell:nth-child(7) :global(.ed-tile) { grid-column: span 2; }
+  .proposal__cell:nth-child(8) :global(.ed-tile) { grid-column: span 2; }
 
-  .principio {
-    margin: var(--space-12) 0 var(--space-13);
-    padding: var(--space-9);
-  }
-  .principio__texto {
-    font-family: var(--font-serif);
-    font-size: clamp(24px, 3.4vw, 32px);
-    line-height: 1.2;
-    margin: var(--space-5) 0 0;
-    max-width: 44rem;
-    color: var(--color-marfil);
-  }
-  .principio__texto em {
-    font-style: italic;
-    color: var(--color-terracota-soft);
-  }
+  /* Featured cell gets larger typography */
+  .proposal__cell.is-feature :global(.ed-tile__title) { font-size: clamp(30px, 3.6vw, 44px); }
+  .proposal__cell.is-feature :global(.ed-tile__desc) { font-size: 15px; max-width: 32ch; }
+  .proposal__cell.is-feature :global(.ed-tile__num) { font-size: 44px; }
 
   @media (max-width: 1024px) {
-    .grid-situaciones { grid-template-columns: repeat(2, 1fr); }
-    .grid-entradas { grid-template-columns: 1fr; }
+    .proposal__grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 200px; }
+    .proposal__cell:nth-child(1) :global(.ed-tile) { grid-column: span 2; grid-row: span 1; padding: var(--space-7); }
+    .proposal__cell:nth-child(2) :global(.ed-tile),
+    .proposal__cell:nth-child(3) :global(.ed-tile),
+    .proposal__cell:nth-child(4) :global(.ed-tile),
+    .proposal__cell:nth-child(5) :global(.ed-tile),
+    .proposal__cell:nth-child(6) :global(.ed-tile),
+    .proposal__cell:nth-child(7) :global(.ed-tile),
+    .proposal__cell:nth-child(8) :global(.ed-tile) { grid-column: span 1; }
   }
   @media (max-width: 540px) {
-    .hero { padding: var(--space-11) 0 var(--space-9); }
-    .principio { padding: var(--space-7); }
+    .proposal__grid { grid-template-columns: 1fr; grid-auto-rows: minmax(180px, auto); }
+    .proposal__cell:nth-child(n) :global(.ed-tile) { grid-column: span 1; padding: var(--space-6); }
+  }
+
+  /* ── Entries layout ────────────────────────────────────── */
+  .entries__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-bottom: var(--space-9);
+  }
+  .entries__title {
+    margin: var(--space-2) 0 0;
+    color: var(--color-negro);
+  }
+  .entries__title em { font-style: italic; color: var(--color-terracota); }
+
+  .entries__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--color-linea);
+    border: 1px solid var(--color-linea);
+  }
+  @media (max-width: 980px) {
+    .entries__grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── Closing ──────────────────────────────────────────── */
+  .closing {
+    margin-top: var(--space-12);
+  }
+  .closing__body {
+    max-width: 44rem;
+  }
+  .closing__text {
+    font-family: var(--font-serif);
+    font-size: clamp(20px, 2.4vw, 28px);
+    line-height: 1.4;
+    color: var(--color-negro);
+    margin: var(--space-5) 0 0;
+  }
+  .closing__text em {
+    font-style: italic;
+    color: var(--color-terracota);
   }
 </style>
