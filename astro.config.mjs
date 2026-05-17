@@ -11,7 +11,7 @@ import mdx from '@astrojs/mdx';
 // Cuando configures el repo, las variables PUBLIC_GH_USER y PUBLIC_GH_REPO
 // se inyectarán desde GitHub Actions (ver .github/workflows/deploy.yml).
 const ghUser = process.env.PUBLIC_GH_USER ?? '';
-const ghRepo = process.env.PUBLIC_GH_REPO ?? 'estilo';
+const ghRepo = process.env.PUBLIC_GH_REPO ?? 'DWP';
 const site = ghUser ? `https://${ghUser}.github.io` : undefined;
 const base = ghUser ? `/${ghRepo}/` : '/';
 

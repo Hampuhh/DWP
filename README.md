@@ -21,6 +21,8 @@ npm run preview
 El output queda en `dist/`. En GitHub Pages se publica automáticamente con cada
 push a `main` (ver `.github/workflows/deploy.yml`).
 
+URL en producción: **https://hampuhh.github.io/DWP/**
+
 ## Estructura
 
 - `src/content/docs/` — páginas de la guía (markdown y MDX)
