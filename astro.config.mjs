@@ -49,6 +49,17 @@ export default defineConfig({
           tag: 'script',
           content: `try { if (typeof localStorage !== 'undefined' && !localStorage.getItem('starlight-theme')) { localStorage.setItem('starlight-theme', 'light'); document.documentElement.dataset.theme = 'light'; } } catch(_) {}`,
         },
+        // ── PWA: manifest, theme color, iconos iOS y registro de service worker ─────
+        { tag: 'link', attrs: { rel: 'manifest', href: `${base}manifest.webmanifest` } },
+        { tag: 'meta', attrs: { name: 'theme-color', content: '#F5F1EA' } },
+        { tag: 'meta', attrs: { name: 'apple-mobile-web-app-capable', content: 'yes' } },
+        { tag: 'meta', attrs: { name: 'apple-mobile-web-app-status-bar-style', content: 'default' } },
+        { tag: 'meta', attrs: { name: 'apple-mobile-web-app-title', content: 'estilo' } },
+        { tag: 'link', attrs: { rel: 'apple-touch-icon', sizes: '180x180', href: `${base}icons/apple-touch-icon-180.png` } },
+        {
+          tag: 'script',
+          content: `if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('${base}sw.js', { scope: '${base}' }).catch((err) => console.warn('SW registration failed', err)); }); }`,
+        },
         {
           tag: 'link',
           attrs: {
