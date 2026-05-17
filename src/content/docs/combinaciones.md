@@ -1,0 +1,85 @@
+---
+title: Combinaciones que funcionan
+description: Recetas de outfits probadas, por paleta y por ocasión.
+sidebar:
+  order: 3
+---
+
+## Por paleta
+
+### Marino + camel + blanco
+
+La combinación más resistente al tiempo. Cualquier hora, cualquier estación.
+
+- Pantalón marino + camisa blanca + blazer camel + zapato marino.
+- Vestido camisero camel + cinturón cuero coñac + camisa blanca debajo.
+- Falda midi marino + jersey camel cashmere + balerina marino + bolso camel.
+
+### Verde botella + crema + camel
+
+La paleta tierra refinada. Ideal para días de carácter.
+
+- Traje verde botella + blusa crema + zapatos camel + bolso camel.
+- Vestido midi crema + cárdigan verde botella + botín marrón.
+
+### Negro + blanco + un toque
+
+Cuando quieres orden visual con un punto de personalidad.
+
+- Pantalón negro + camisa blanca + balerina negra + pañuelo terracota al cuello.
+- Vestido negro shift + zapatos burdeos + aretes oro pequeños.
+
+### Greige + crema + chocolate
+
+La paleta tierra contemporánea. Funciona en oficina y en cita.
+
+- Pantalón greige + jersey crema + abrigo chocolate + mocasín marrón.
+
+### Burgundy + gris + crema
+
+Otoño-invierno con calor.
+
+- Falda midi burgundy + jersey gris + abrigo crema + bota tacón bloque negra.
+
+## Por ocasión
+
+### Para una cita
+
+- Vestido midi color tierra + balerinas o sandalias finas + pañuelo discreto + bolso pequeño.
+- Falda satín marfil o burdeos + camiseta merino fina + blazer + *sneakers* o mocasines.
+
+### Para un brunch
+
+- Pantalón blanco o crema + camisa de algodón egipcia + jersey fino atado al hombro + balerinas.
+- Vestido shirt-dress azul medio + sandalia plana + bolso de paja en verano.
+
+### Para una cena
+
+- Pantalón negro o marino + blusa de seda en color joya + tacón cómodo + clutch pequeño.
+- Vestido midi negro o esmeralda + aretes statement contenidos.
+
+### Para una boda invitada (no de noche cerrada)
+
+- Vestido midi paleta tierra (terracota, mostaza, verde botella, ciruela) + tocado o aretes
+  statement + tacón cómodo + clutch.
+
+### Para un viaje
+
+- Jeans premium oscuros + camisa blanca + blazer + *sneaker* blanca limpia + trench.
+- Vestido knit color sólido + cárdigan largo + balerina o bota plana.
+
+### Para café o paseo
+
+- Pantalón ancho camel + jersey fino crema + balerina + bolso *bucket* pequeño.
+- Jeans rectos + camiseta blanca de algodón pesado + blazer + mocasines.
+
+## Cómo evaluar una combinación
+
+Antes de salir de casa, frente al espejo y a luz natural:
+
+1. **¿Hay un punto focal?** No más de uno.
+2. **¿La paleta encaja en uno de los esquemas** (mono, análogo, complementario suavizado, neutro)?
+3. **¿El contraste replica tu contraste natural?** (Ver [auto-diagnóstico](./auto-diagnostico)).
+4. **¿Los metales son consistentes?** Todo oro o todo plata, salvo *décalage* intencional.
+5. **¿Hay textura?** Combinar lisos puros queda plano: introduce un tejido con textura (cashmere,
+   tweed, lino, satín).

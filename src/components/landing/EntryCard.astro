@@ -1,0 +1,75 @@
+---
+import { Shirt, Sparkles, Palette, ArrowUpRight } from '@lucide/svelte';
+
+interface Props {
+  href: string;
+  eyebrow: string;
+  titulo: string;
+  descripcion: string;
+  iconName: 'shirt' | 'sparkles' | 'palette';
+}
+
+const { href, eyebrow, titulo, descripcion, iconName } = Astro.props;
+
+const iconMap = { shirt: Shirt, sparkles: Sparkles, palette: Palette } as const;
+const Icon = iconMap[iconName];
+---
+
+<a class="entry" href={href}>
+  <div class="entry__head">
+    <span class="entry__eyebrow">{eyebrow}</span>
+    <ArrowUpRight size={22} strokeWidth={1.4} />
+  </div>
+  <div class="entry__icon">
+    <Icon size={48} strokeWidth={1.2} />
+  </div>
+  <div class="entry__body">
+    <h3 class="entry__title">{titulo}</h3>
+    <p class="entry__desc">{descripcion}</p>
+  </div>
+</a>
+
+<style>
+  .entry {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-9);
+    padding: var(--space-8);
+    min-height: 320px;
+    background: var(--color-marfil);
+    border: var(--border-hairline);
+    color: var(--color-negro);
+    text-decoration: none;
+    transition: background var(--motion-base), color var(--motion-base);
+  }
+  .entry:hover { background: var(--color-negro); color: var(--color-marfil); }
+  .entry:hover .entry__eyebrow,
+  .entry:hover .entry__desc { color: var(--color-marfil); opacity: 0.7; }
+
+  .entry__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .entry__eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono-size);
+    letter-spacing: var(--tracking-wide);
+    color: var(--color-negro-45);
+  }
+  .entry__icon { color: currentColor; opacity: 0.9; }
+  .entry__title {
+    font-family: var(--font-serif);
+    font-size: var(--type-h4-size);
+    font-weight: var(--weight-medium);
+    margin: 0 0 var(--space-2);
+  }
+  .entry__desc {
+    font-family: var(--font-sans);
+    font-size: var(--type-body-sm-size);
+    line-height: 1.55;
+    color: var(--color-negro-60);
+    margin: 0;
+  }
+</style>

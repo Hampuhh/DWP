@@ -1,0 +1,78 @@
+---
+import {
+  Coffee, Sun, Heart, Cake, Flower2, Plane, Film, UtensilsCrossed,
+} from '@lucide/svelte';
+
+interface Props {
+  slug: string;
+  titulo: string;
+  descripcion: string;
+  icon: string;
+}
+
+const { slug, titulo, descripcion, icon } = Astro.props;
+
+const iconMap: Record<string, any> = {
+  coffee: Coffee,
+  sun: Sun,
+  heart: Heart,
+  cake: Cake,
+  flower: Flower2,
+  plane: Plane,
+  film: Film,
+  utensils: UtensilsCrossed,
+};
+
+const Icon = iconMap[icon] ?? Sun;
+---
+
+<a class="sit-card" href={`./outfits/${slug}`}>
+  <div class="sit-card__icon">
+    <Icon size={28} strokeWidth={1.4} />
+  </div>
+  <div class="sit-card__body">
+    <h3 class="sit-card__title">{titulo}</h3>
+    <p class="sit-card__desc">{descripcion}</p>
+  </div>
+</a>
+
+<style>
+  .sit-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    padding: var(--space-7);
+    background: var(--color-marfil);
+    color: var(--color-negro);
+    text-decoration: none;
+    border: none;
+    transition: background var(--motion-base);
+    min-height: 200px;
+  }
+  .sit-card:hover {
+    background: var(--color-crema);
+  }
+  .sit-card:hover .sit-card__title { color: var(--color-terracota); }
+  .sit-card__icon {
+    color: var(--color-negro);
+    opacity: 0.85;
+  }
+  .sit-card__title {
+    font-family: var(--font-serif);
+    font-size: var(--type-h4-size);
+    font-weight: var(--weight-medium);
+    line-height: 1.1;
+    margin: 0;
+    transition: color var(--motion-base);
+  }
+  .sit-card__desc {
+    font-family: var(--font-sans);
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-lh);
+    color: var(--color-negro-60);
+    margin: var(--space-2) 0 0;
+  }
+  @media (max-width: 540px) {
+    .sit-card { padding: var(--space-5); min-height: 150px; }
+  }
+</style>

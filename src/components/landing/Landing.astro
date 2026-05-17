@@ -1,0 +1,177 @@
+---
+import {
+  Coffee, Sun, Heart, Cake, Flower2, Plane, Film, UtensilsCrossed,
+  Shirt, Sparkles, Palette,
+} from '@lucide/svelte';
+import SituationCard from './SituationCard.astro';
+import EntryCard from './EntryCard.astro';
+
+const situaciones = [
+  { slug: 'cafe',     titulo: 'Café o almuerzo', descripcion: 'Algo cómodo, pulido sin esfuerzo.', icon: 'coffee' },
+  { slug: 'dia',      titulo: 'Día a día',       descripcion: 'Tu uniforme silencioso.',            icon: 'sun' },
+  { slug: 'cita',     titulo: 'Una cita',        descripcion: 'Sutil, intencional, tú.',           icon: 'heart' },
+  { slug: 'cena',     titulo: 'Cena o cumpleaños', descripcion: 'Elegancia sin estridencia.',      icon: 'cake' },
+  { slug: 'boda',     titulo: 'Una boda',        descripcion: 'Cocktail o ceremonia, sin robar foco.', icon: 'flower' },
+  { slug: 'viaje',    titulo: 'Un viaje',        descripcion: 'Mínima maleta, máximas combinaciones.', icon: 'plane' },
+  { slug: 'cine',     titulo: 'Cine o paseo',    descripcion: 'Casual con intención.',             icon: 'film' },
+  { slug: 'brunch',   titulo: 'Brunch',          descripcion: 'Luz natural, paleta serena.',       icon: 'utensils' },
+];
+---
+
+<section class="hero">
+  <p class="hero__eyebrow">UNA GUÍA PERSONAL DE IMAGEN</p>
+  <h1 class="hero__title">
+    Tu estilo, <em>tu manera</em>.
+  </h1>
+  <p class="hero__lede">
+    Una plataforma íntima para conocer tu paleta, construir tu armario y vestirte
+    para cada momento sin esfuerzo. Todo guardado en tu dispositivo, solo para ti.
+  </p>
+</section>
+
+<hr class="hr-hair" />
+
+<section class="situaciones">
+  <header class="section-header">
+    <p class="t-eyebrow">PROPUESTA</p>
+    <h2>¿Qué planes tienes <em>hoy</em>?</h2>
+  </header>
+
+  <div class="grid-situaciones">
+    {situaciones.map((s) => <SituationCard {...s} />)}
+  </div>
+</section>
+
+<hr class="hr-hair" />
+
+<section class="entradas">
+  <header class="section-header">
+    <p class="t-eyebrow">EMPIEZA POR AQUÍ</p>
+    <h2>¿Por dónde <em>empiezas</em>?</h2>
+  </header>
+
+  <div class="grid-entradas">
+    <EntryCard
+      href="./mi-closet"
+      eyebrow="01"
+      titulo="Mi closet digital"
+      descripcion="Cataloga cada prenda con foto, color y ocasión. Tu armario, en orden."
+      iconName="shirt"
+    />
+    <EntryCard
+      href="./generador"
+      eyebrow="02"
+      titulo="Generar outfit"
+      descripcion="Elige un plan y deja que las reglas cromáticas y de contexto te propongan un look."
+      iconName="sparkles"
+    />
+    <EntryCard
+      href="./mi-paleta"
+      eyebrow="03"
+      titulo="Mi paleta personal"
+      descripcion="Tu estación de color, neutros base, acentos y statement. La columna vertebral."
+      iconName="palette"
+    />
+  </div>
+</section>
+
+<section class="principio card--dark">
+  <p class="t-eyebrow" style="color: var(--color-greige);">EL PRINCIPIO</p>
+  <p class="principio__texto">
+    Vestir bien, mucho tiempo, las mismas piezas excelentes
+    <em>es el lujo silencioso</em> y la coherencia hecha forma.
+  </p>
+</section>
+
+<style>
+  .hero {
+    padding: var(--space-13) 0 var(--space-12);
+    max-width: 60rem;
+    margin: 0 auto;
+  }
+  .hero__eyebrow {
+    font-family: var(--font-sans);
+    font-size: var(--type-eyebrow-size);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--color-negro-60);
+    margin: 0 0 var(--space-7);
+  }
+  .hero__title {
+    font-family: var(--font-serif);
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: 0.98;
+    letter-spacing: var(--tracking-tight);
+    font-weight: var(--weight-medium);
+    margin: 0 0 var(--space-7);
+    color: var(--color-negro);
+  }
+  .hero__title em {
+    font-style: italic;
+    color: var(--color-terracota);
+  }
+  .hero__lede {
+    font-family: var(--font-sans);
+    font-size: var(--type-body-lg-size);
+    line-height: var(--type-body-lg-lh);
+    color: var(--color-negro-60);
+    max-width: 36rem;
+    margin: 0;
+  }
+
+  .section-header {
+    margin: var(--space-12) 0 var(--space-9);
+    max-width: 60rem;
+  }
+  .section-header h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(32px, 5vw, 44px);
+    font-weight: var(--weight-medium);
+    line-height: 1.0;
+    letter-spacing: var(--tracking-snug);
+    margin: var(--space-3) 0 0;
+    color: var(--color-negro);
+  }
+  .section-header h2 em { font-style: italic; color: var(--color-terracota); }
+
+  .grid-situaciones {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--color-linea);
+    border: var(--border-hairline);
+  }
+  .grid-entradas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+    margin-bottom: var(--space-12);
+  }
+
+  .principio {
+    margin: var(--space-12) 0 var(--space-13);
+    padding: var(--space-9);
+  }
+  .principio__texto {
+    font-family: var(--font-serif);
+    font-size: clamp(24px, 3.4vw, 32px);
+    line-height: 1.2;
+    margin: var(--space-5) 0 0;
+    max-width: 44rem;
+    color: var(--color-marfil);
+  }
+  .principio__texto em {
+    font-style: italic;
+    color: var(--color-terracota-soft);
+  }
+
+  @media (max-width: 1024px) {
+    .grid-situaciones { grid-template-columns: repeat(2, 1fr); }
+    .grid-entradas { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 540px) {
+    .hero { padding: var(--space-11) 0 var(--space-9); }
+    .principio { padding: var(--space-7); }
+  }
+</style>

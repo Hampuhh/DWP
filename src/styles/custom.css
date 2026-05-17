@@ -1,0 +1,305 @@
+/* ────────────────────────────────────────────────────────────
+   estilo — Overrides de Starlight
+   Mapea los tokens del design system a las variables internas
+   de Starlight. Modo claro y modo oscuro.
+   ──────────────────────────────────────────────────────────── */
+
+:root {
+  /* Starlight color tokens — claro */
+  --sl-color-bg:                var(--color-marfil);
+  --sl-color-bg-nav:            var(--color-marfil);
+  --sl-color-bg-sidebar:        var(--color-crema);
+  --sl-color-bg-inline-code:    var(--color-crema);
+  --sl-color-bg-accent:         var(--color-terracota);
+  --sl-color-text:              var(--color-negro);
+  --sl-color-text-accent:       var(--color-terracota);
+  --sl-color-text-invert:       var(--color-marfil);
+  --sl-color-white:             var(--color-marfil);
+  --sl-color-gray-1:            var(--color-negro);
+  --sl-color-gray-2:            var(--color-negro-60);
+  --sl-color-gray-3:            var(--color-negro-60);
+  --sl-color-gray-4:            var(--color-greige);
+  --sl-color-gray-5:            var(--color-linea);
+  --sl-color-gray-6:            var(--color-linea-soft);
+  --sl-color-gray-7:            var(--color-crema);
+  --sl-color-black:             var(--color-marfil);
+  --sl-color-hairline:          var(--color-linea);
+  --sl-color-hairline-shade:    var(--color-linea);
+  --sl-color-hairline-light:    var(--color-linea-soft);
+  --sl-color-accent:            var(--color-terracota);
+  --sl-color-accent-high:       var(--color-terracota-deep);
+  --sl-color-accent-low:        var(--color-terracota-soft);
+
+  /* Tipografía Starlight */
+  --sl-font:                    var(--font-sans);
+  --sl-font-system:             var(--font-sans);
+  --sl-font-system-mono:        var(--font-mono);
+
+  /* Tamaños/escala */
+  --sl-text-base:               16px;
+  --sl-text-xs:                 12px;
+  --sl-text-sm:                 13px;
+  --sl-text-body:               16px;
+  --sl-text-body-sm:            14px;
+  --sl-text-h1:                 var(--type-h1-size);
+  --sl-text-h2:                 var(--type-h2-size);
+  --sl-text-h3:                 var(--type-h3-size);
+  --sl-text-h4:                 var(--type-h4-size);
+  --sl-text-h5:                 var(--type-h5-size);
+
+  /* Sidebar */
+  --sl-sidebar-width:           260px;
+  --sl-sidebar-pad-x:           1rem;
+  --sl-nav-height:              64px;
+
+  /* Content max width — generoso, editorial */
+  --sl-content-width:           60rem;
+  --sl-content-pad-x:           1.5rem;
+
+  /* Shadows mínimas */
+  --sl-shadow-sm:               var(--shadow-soft);
+  --sl-shadow-md:               var(--shadow-soft);
+  --sl-shadow-lg:               var(--shadow-lifted);
+}
+
+:root[data-theme='dark'] {
+  --sl-color-bg:                var(--color-marfil);
+  --sl-color-bg-nav:            var(--color-marfil);
+  --sl-color-bg-sidebar:        var(--color-crema);
+  --sl-color-bg-inline-code:    var(--color-crema);
+  --sl-color-text:              var(--color-negro);
+  --sl-color-text-invert:       var(--color-marfil);
+  --sl-color-hairline:          var(--color-linea);
+  --sl-color-hairline-shade:    var(--color-linea);
+  --sl-color-hairline-light:    var(--color-linea-soft);
+}
+
+/* ────────────────────────────────────────────────────────────
+   Tipografía global — body editorial
+   ──────────────────────────────────────────────────────────── */
+
+html, body {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  background: var(--color-marfil);
+  color: var(--color-negro);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.sl-markdown-content {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.sl-markdown-content h1,
+.sl-markdown-content h2,
+.sl-markdown-content h3,
+.sl-markdown-content h4,
+.sl-markdown-content h5,
+.sl-markdown-content h6 {
+  font-family: var(--font-serif);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-snug);
+  color: var(--color-negro);
+}
+
+.sl-markdown-content h1 { font-size: clamp(36px, 6vw, 64px); line-height: 0.98; margin-top: 0; }
+.sl-markdown-content h2 { font-size: clamp(28px, 4vw, 44px); line-height: 1.0;  margin-top: 2.5em; }
+.sl-markdown-content h3 { font-size: clamp(22px, 3vw, 32px); line-height: 1.05; margin-top: 2em; }
+.sl-markdown-content h4 { font-size: 24px; line-height: 1.1; margin-top: 1.75em; }
+.sl-markdown-content h5 { font-size: 19px; line-height: 1.15; }
+
+/* Itálica con terracota — único acento cromático sobre texto */
+.sl-markdown-content em,
+.sl-markdown-content h1 em,
+.sl-markdown-content h2 em,
+.sl-markdown-content h3 em,
+.sl-markdown-content h4 em,
+.sl-markdown-content h5 em {
+  font-style: italic;
+  color: var(--color-terracota);
+}
+
+/* Enlaces */
+.sl-markdown-content a {
+  color: var(--color-negro);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-terracota);
+  transition: color var(--motion-base);
+}
+.sl-markdown-content a:hover { color: var(--color-terracota); }
+
+/* Tablas */
+.sl-markdown-content table {
+  border: var(--border-hairline);
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 14px;
+}
+.sl-markdown-content th,
+.sl-markdown-content td {
+  border: var(--border-hairline-soft);
+  padding: 10px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+.sl-markdown-content th {
+  background: var(--color-crema);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-medium);
+  font-size: 11px;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-negro-60);
+}
+
+/* Listas */
+.sl-markdown-content ul,
+.sl-markdown-content ol { padding-left: 1.2em; }
+.sl-markdown-content li { margin: 0.35em 0; }
+
+/* Inline code */
+.sl-markdown-content :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--color-crema);
+  border: var(--border-hairline-soft);
+  padding: 2px 6px;
+  border-radius: 0;
+}
+
+/* Blockquote — callout editorial */
+.sl-markdown-content blockquote {
+  border-left: 2px solid var(--color-terracota);
+  background: var(--color-crema);
+  margin: var(--space-6) 0;
+  padding: var(--space-5) var(--space-6);
+  font-family: var(--font-serif);
+  font-size: 19px;
+  line-height: 1.4;
+  color: var(--color-negro);
+  font-style: italic;
+}
+
+/* hr */
+.sl-markdown-content hr { border: none; border-top: var(--border-hairline); margin: var(--space-9) 0; }
+
+/* ────────────────────────────────────────────────────────────
+   Header / topbar
+   ──────────────────────────────────────────────────────────── */
+
+.header {
+  border-bottom: var(--border-hairline);
+  background: var(--color-marfil);
+}
+
+.site-title {
+  font-family: var(--font-serif);
+  font-weight: var(--weight-medium);
+  font-size: 22px;
+  letter-spacing: 0;
+}
+
+/* Logo image proportions */
+.site-title img { max-height: 36px; width: auto; }
+
+/* ────────────────────────────────────────────────────────────
+   Sidebar
+   ──────────────────────────────────────────────────────────── */
+
+.sidebar-pane {
+  background: var(--color-crema);
+  border-right: var(--border-hairline);
+}
+
+.sidebar-content {
+  padding-top: var(--space-6);
+}
+
+/* Group labels (MI ESPACIO, ESENCIALES…) */
+.sidebar-content details > summary > .group-label > .large,
+.sidebar-content > ul > li > details > summary > .group-label > .large,
+.sidebar-content > ul > li > span.large {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-negro-60);
+}
+
+/* Sidebar link items */
+.sidebar-content a {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: var(--weight-regular);
+  color: var(--color-negro);
+  border-radius: 0;
+  padding: 11px 12px;
+}
+.sidebar-content a:hover { background: var(--color-negro-08); }
+
+/* Active link — serif italic terracota con borde izquierdo */
+.sidebar-content a[aria-current='page'] {
+  background: var(--color-marfil);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 17px;
+  color: var(--color-terracota);
+  border-left: 1px solid var(--color-terracota);
+  font-weight: var(--weight-medium);
+}
+
+/* ────────────────────────────────────────────────────────────
+   ThemeSelect — modo oscuro toggle limpio
+   ──────────────────────────────────────────────────────────── */
+
+starlight-theme-select select,
+.theme-select select {
+  background: transparent;
+  border: var(--border-hairline);
+  border-radius: 0;
+  color: var(--color-negro);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+}
+
+/* ────────────────────────────────────────────────────────────
+   Mobile
+   ──────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .sl-markdown-content { font-size: 16px; }
+  .sl-markdown-content h1 { font-size: 36px; }
+  .sl-markdown-content h2 { font-size: 28px; }
+  .sl-markdown-content h3 { font-size: 22px; }
+
+  /* Botones del menú móvil — tap targets generosos */
+  mobile-starlight-toc summary,
+  starlight-menu-button button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Tablas con scroll horizontal */
+  .sl-markdown-content table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+/* ────────────────────────────────────────────────────────────
+   Hide elementos no usados
+   ──────────────────────────────────────────────────────────── */
+
+.right-sidebar { display: none; }
+.main-pane { max-width: none; }
+
+@media (min-width: 72rem) {
+  .main-frame > .lg\:sl-flex { grid-template-columns: var(--sl-sidebar-width) auto; }
+}

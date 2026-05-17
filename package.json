@@ -1,0 +1,29 @@
+{
+  "name": "estilo",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^4.0.3",
+    "@astrojs/starlight": "^0.30.6",
+    "@astrojs/svelte": "^7.0.13",
+    "astro": "^5.1.0",
+    "browser-image-compression": "^2.0.2",
+    "idb-keyval": "^6.2.1",
+    "@lucide/svelte": "^1.16.0",
+    "svelte": "^5.16.0",
+    "uuid": "^11.0.4"
+  },
+  "devDependencies": {
+    "@types/uuid": "^10.0.0",
+    "sharp": "^0.33.5",
+    "typescript": "^5.7.2"
+  }
+}

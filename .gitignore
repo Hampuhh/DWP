@@ -1,0 +1,42 @@
+# build output
+dist/
+.output/
+
+# dependencies
+node_modules/
+
+# logs
+*.log
+npm-debug.log*
+dev.log
+dev.err.log
+
+# environment variables
+.env
+.env.production
+.env.*.local
+
+# macOS-specific files
+.DS_Store
+
+# windows
+Thumbs.db
+
+# astro
+.astro/
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+
+# files locales originales del usuario (no son código)
+compass_artifact_wf-*.md
+design-system.css
+design-system.json
+
+# package-lock se versiona, pero ignoramos lockfiles alternativos
+yarn.lock
+pnpm-lock.yaml
+bun.lockb

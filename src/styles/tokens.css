@@ -1,0 +1,363 @@
+/* ────────────────────────────────────────────────────────────
+   estilo — Design System · v1.0
+   Quiet luxury · editorial · neutra atemporal
+   Source of truth para tokens cromáticos, tipográficos y de motion.
+   ──────────────────────────────────────────────────────────── */
+
+:root {
+  /* ── COLOR · neutrales ─────────────────────────────────── */
+  --color-marfil:      #F5F1EA;
+  --color-crema:       #FAF7F1;
+  --color-greige:      #B8B0A4;
+  --color-linea:       #D9D4CA;
+  --color-linea-soft:  #E6E2D8;
+  --color-negro:       #2A2825;
+
+  /* ── COLOR · acento ────────────────────────────────────── */
+  --color-terracota:        #B97A57;
+  --color-terracota-soft:   #C9967A;
+  --color-terracota-deep:   #A86A48;
+
+  /* ── COLOR · alfas ─────────────────────────────────────── */
+  --color-negro-60:    rgba(42, 40, 37, 0.60);
+  --color-negro-45:    rgba(42, 40, 37, 0.45);
+  --color-negro-08:    rgba(42, 40, 37, 0.08);
+
+  /* ── TIPOGRAFÍA · familias ─────────────────────────────── */
+  --font-serif: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono:  'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* ── TIPOGRAFÍA · escala ───────────────────────────────── */
+  --type-display-size:   96px;   --type-display-lh:   0.98;
+  --type-h1-size:        64px;   --type-h1-lh:        0.98;
+  --type-h2-size:        44px;   --type-h2-lh:        1.0;
+  --type-h3-size:        32px;   --type-h3-lh:        1.05;
+  --type-h4-size:        24px;   --type-h4-lh:        1.1;
+  --type-h5-size:        19px;   --type-h5-lh:        1.15;
+  --type-body-lg-size:   16px;   --type-body-lg-lh:   1.6;
+  --type-body-size:      16px;   --type-body-lh:      1.65;
+  --type-body-sm-size:   13px;   --type-body-sm-lh:   1.5;
+  --type-caption-size:   11px;   --type-caption-lh:   1.5;
+  --type-eyebrow-size:   11px;   --type-eyebrow-lh:   1.4;
+  --type-mono-size:      10.5px; --type-mono-lh:      1.4;
+  --type-button-size:    12px;   --type-button-lh:    1.2;
+
+  /* ── TIPOGRAFÍA · pesos ────────────────────────────────── */
+  --weight-light:    300;
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+
+  /* ── TIPOGRAFÍA · letter-spacing ───────────────────────── */
+  --tracking-tight:  -0.01em;
+  --tracking-snug:   -0.005em;
+  --tracking-normal:  0;
+  --tracking-wide:    0.04em;
+  --tracking-wider:   0.16em;
+  --tracking-widest:  0.18em;
+
+  /* ── ESPACIADO · 4px base ──────────────────────────────── */
+  --space-0:   0;
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-7:  32px;
+  --space-8:  40px;
+  --space-9:  48px;
+  --space-10: 56px;
+  --space-11: 64px;
+  --space-12: 80px;
+  --space-13: 100px;
+
+  /* ── BORDER RADIUS ─────────────────────────────────────── */
+  --radius-none: 0;
+  --radius-xs:   2px;
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-pill: 999px;
+
+  /* ── BORDER ────────────────────────────────────────────── */
+  --border-hairline:       1px solid var(--color-linea);
+  --border-hairline-soft:  1px solid var(--color-linea-soft);
+  --border-dashed:         1px dashed var(--color-linea);
+  --border-dark:           1px solid var(--color-negro);
+
+  /* ── SHADOW (mínimas — el sistema vive de hairlines) ───── */
+  --shadow-none:   none;
+  --shadow-soft:   0 1px 0 rgba(42, 40, 37, 0.04);
+  --shadow-lifted: 0 18px 40px -24px rgba(42, 40, 37, 0.18);
+  --shadow-inset:  inset 0 0 0 1px var(--color-linea);
+
+  /* ── MOTION ────────────────────────────────────────────── */
+  --motion-fast: 150ms;
+  --motion-base: 200ms;
+  --motion-slow: 350ms;
+  --easing-standard: cubic-bezier(0.2, 0.7, 0.3, 1);
+  --easing-in-out:   ease-in-out;
+
+  /* ── BREAKPOINTS ───────────────────────────────────────── */
+  --bp-mobile:  390px;
+  --bp-tablet:  768px;
+  --bp-desktop: 1280px;
+}
+
+/* ── MODO OSCURO · invierte neutrales · terracota intacta ── */
+:root[data-theme='dark'],
+.theme-dark {
+  --color-marfil:     #2A2825;
+  --color-crema:      #353230;
+  --color-negro:      #F5F1EA;
+  --color-linea:      #3F3B33;
+  --color-linea-soft: #2F2C29;
+  --color-greige:     #8B8378;
+
+  --color-negro-60:   rgba(245, 241, 234, 0.65);
+  --color-negro-45:   rgba(245, 241, 234, 0.40);
+  --color-negro-08:   rgba(245, 241, 234, 0.06);
+}
+
+/* ────────────────────────────────────────────────────────────
+   TIPOGRAFÍA · clases utilitarias
+   ──────────────────────────────────────────────────────────── */
+
+.t-display {
+  font-family: var(--font-serif);
+  font-size: var(--type-display-size);
+  line-height: var(--type-display-lh);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-tight);
+}
+.t-h1 { font-family: var(--font-serif); font-size: var(--type-h1-size);   line-height: var(--type-h1-lh);   font-weight: var(--weight-medium); letter-spacing: var(--tracking-snug); }
+.t-h2 { font-family: var(--font-serif); font-size: var(--type-h2-size);   line-height: var(--type-h2-lh);   font-weight: var(--weight-medium); letter-spacing: var(--tracking-snug); }
+.t-h3 { font-family: var(--font-serif); font-size: var(--type-h3-size);   line-height: var(--type-h3-lh);   font-weight: var(--weight-medium); letter-spacing: var(--tracking-snug); }
+.t-h4 { font-family: var(--font-serif); font-size: var(--type-h4-size);   line-height: var(--type-h4-lh);   font-weight: var(--weight-medium); }
+.t-h5 { font-family: var(--font-serif); font-size: var(--type-h5-size);   line-height: var(--type-h5-lh);   font-weight: var(--weight-medium); }
+
+.t-body-lg { font-family: var(--font-sans); font-size: var(--type-body-lg-size); line-height: var(--type-body-lg-lh); font-weight: var(--weight-regular); }
+.t-body    { font-family: var(--font-sans); font-size: var(--type-body-size);    line-height: var(--type-body-lh);    font-weight: var(--weight-regular); }
+.t-body-sm { font-family: var(--font-sans); font-size: var(--type-body-sm-size); line-height: var(--type-body-sm-lh); font-weight: var(--weight-regular); }
+.t-caption { font-family: var(--font-sans); font-size: var(--type-caption-size); line-height: var(--type-caption-lh); font-weight: var(--weight-regular); color: var(--color-negro-60); }
+
+.t-eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--type-eyebrow-size);
+  font-weight: var(--weight-medium);
+  line-height: var(--type-eyebrow-lh);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-negro-60);
+}
+
+.t-mono {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-size);
+  line-height: var(--type-mono-lh);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-negro-45);
+}
+
+/* Acento itálico — usar dentro de un título */
+.t-italic-accent,
+h1 em, h2 em, h3 em, h4 em, h5 em {
+  font-style: italic;
+  color: var(--color-terracota);
+}
+
+/* ────────────────────────────────────────────────────────────
+   COMPONENTES · botones
+   ──────────────────────────────────────────────────────────── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 14px 22px;
+  font-family: var(--font-sans);
+  font-size: var(--type-button-size);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  line-height: var(--type-button-lh);
+  border: none;
+  border-radius: var(--radius-none);
+  cursor: pointer;
+  text-decoration: none;
+  min-height: 44px;
+  transition: filter var(--motion-base), background var(--motion-base), color var(--motion-base);
+}
+.btn:hover  { filter: brightness(1.12); }
+.btn:active { filter: brightness(0.95); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.btn--primary {
+  background: var(--color-negro);
+  color: var(--color-marfil);
+}
+.btn--secondary {
+  background: transparent;
+  color: var(--color-negro);
+  border: var(--border-dark);
+}
+.btn--secondary:hover {
+  background: var(--color-negro);
+  color: var(--color-marfil);
+  filter: none;
+}
+.btn--accent {
+  background: var(--color-terracota);
+  color: var(--color-marfil);
+}
+.btn--accent:hover {
+  background: var(--color-terracota-deep);
+  filter: none;
+}
+
+/* ────────────────────────────────────────────────────────────
+   COMPONENTES · chips
+   ──────────────────────────────────────────────────────────── */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 9px 16px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: var(--weight-regular);
+  letter-spacing: var(--tracking-wide);
+  background: transparent;
+  color: var(--color-negro);
+  border: var(--border-hairline);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  min-height: 44px;
+  transition: all var(--motion-fast);
+}
+.chip:hover { border-color: var(--color-negro); }
+.chip.is-active {
+  background: var(--color-negro);
+  color: var(--color-marfil);
+  border-color: var(--color-negro);
+}
+.chip.is-active--accent {
+  background: var(--color-terracota);
+  color: var(--color-marfil);
+  border-color: var(--color-terracota);
+}
+.chip--dashed { border-style: dashed; }
+
+/* ────────────────────────────────────────────────────────────
+   COMPONENTES · cards
+   ──────────────────────────────────────────────────────────── */
+
+.card {
+  background: var(--color-marfil);
+  border: var(--border-hairline);
+  border-radius: var(--radius-none);
+  padding: var(--space-6);
+}
+.card--elevated { background: var(--color-crema); }
+.card--dark {
+  background: var(--color-negro);
+  color: var(--color-marfil);
+  border: none;
+  padding: var(--space-7);
+}
+
+.card-garment            { display: flex; flex-direction: column; background: var(--color-marfil); }
+.card-garment__media     { position: relative; aspect-ratio: 1 / 1; width: 100%; border: var(--border-hairline); }
+.card-garment__color-bar { height: 6px; width: 100%; }
+.card-garment__meta {
+  padding: var(--space-3) var(--space-3) var(--space-4);
+  border: var(--border-hairline);
+  border-top: none;
+  display: flex; flex-direction: column; gap: var(--space-1);
+}
+
+/* ────────────────────────────────────────────────────────────
+   COMPONENTES · inputs
+   ──────────────────────────────────────────────────────────── */
+
+.input {
+  display: block;
+  width: 100%;
+  background: transparent;
+  color: var(--color-negro);
+  font-family: var(--font-sans);
+  font-size: var(--type-body-size);
+  font-weight: var(--weight-regular);
+  padding: 12px 0;
+  border: none;
+  border-bottom: var(--border-hairline);
+  border-radius: var(--radius-none);
+  transition: border-color var(--motion-base);
+}
+.input::placeholder { color: var(--color-negro-45); }
+.input:focus { outline: none; border-bottom-color: var(--color-negro); }
+
+.input--boxed {
+  background: var(--color-crema);
+  border: var(--border-hairline);
+  padding: 11px 14px;
+}
+.input--boxed:focus { border-color: var(--color-negro); }
+
+.input--search {
+  background: var(--color-crema);
+  border: var(--border-hairline);
+  padding: 11px 14px 11px 38px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%232A2825' stroke-width='1.4' stroke-linecap='round'><circle cx='11' cy='11' r='7'/><path d='M20 20l-3.5-3.5'/></svg>");
+  background-repeat: no-repeat;
+  background-position: 12px 50%;
+}
+
+.select {
+  background: transparent;
+  color: var(--color-negro);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  border: var(--border-hairline);
+  padding: 11px 36px 11px 14px;
+  border-radius: var(--radius-none);
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%232A2825' stroke-width='1.4' stroke-linecap='round'><path d='M6 9l6 6 6-6'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  min-height: 44px;
+}
+
+.field-label {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--type-eyebrow-size);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-negro-60);
+}
+
+/* ────────────────────────────────────────────────────────────
+   UTILIDADES
+   ──────────────────────────────────────────────────────────── */
+
+.hr-hair   { border: none; border-top: var(--border-hairline); margin: 0; }
+.vhr-hair  { border: none; border-left: var(--border-hairline); align-self: stretch; }
+
+.placeholder-img {
+  position: relative;
+  background:
+    repeating-linear-gradient(135deg,
+      rgba(42, 40, 37, 0.04) 0 1px,
+      transparent 1px 7px),
+    var(--color-crema);
+  border: var(--border-hairline);
+}
+
+/* Scroll suave de tablas en móvil */
+.table-scroll { width: 100%; overflow-x: auto; }

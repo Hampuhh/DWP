@@ -1,0 +1,10 @@
+---
+import type { Props } from '@astrojs/starlight/props';
+import Landing from '../landing/Landing.astro';
+import DefaultHero from '@astrojs/starlight/components/Hero.astro';
+
+const { entry } = Astro.props;
+const isHome = entry?.slug === '' || entry?.slug === 'index' || entry?.id === 'index.md';
+---
+
+{isHome ? <Landing /> : <DefaultHero {...Astro.props} />}
