@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import { v4 as uuid } from 'uuid';
   import { Sparkles, RotateCw, Star, Heart, AlertCircle, ShoppingBag } from '@lucide/svelte';
-  import type { Categoria, Contexto, Outfit, PerfilCromatico, Prenda } from '~/lib/types';
+  import type { Categoria, Contexto, Outfit, PerfilCromatico, Prenda, Subcategoria } from '~/lib/types';
   import { CONTEXTOS, PALETAS } from '~/lib/data';
   import { validarCombinacion, type EsquemaCromatico, hexToHsl } from '~/lib/color';
   import {
@@ -10,10 +10,17 @@
     eliminarOutfit,
   } from '~/lib/storage';
 
+  // Props: el componente se puede embeber con un contexto fijo (lockContexto)
+  // desde OutfitsPorContexto, o ser standalone (página /generador).
+  let {
+    contextoInicial = 'dia' as Contexto,
+    lockContexto = false,
+  }: { contextoInicial?: Contexto; lockContexto?: boolean } = $props();
+
   let closet = $state<Prenda[]>([]);
   let favoritos = $state<Outfit[]>([]);
   let perfil = $state<PerfilCromatico | null>(null);
-  let contextoActivo = $state<Contexto>('dia');
+  let contextoActivo = $state<Contexto>(contextoInicial);
   let propuesta = $state<{
     prendas: Prenda[]; esquema: EsquemaCromatico; explicacion: string;
   } | null>(null);
@@ -22,6 +29,12 @@
   let intentos = $state(0);
 
   onMount(async () => {
+    // Si NO está locked, permitir override por URL param (?contexto=cafe)
+    if (!lockContexto && typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const c = params.get('contexto');
+      if (c && (c in CONTEXTOS)) contextoActivo = c as Contexto;
+    }
     closet = await getClosetCompleto();
     favoritos = await getOutfitsFavoritos();
     perfil = (await getPerfilCromatico()) ?? null;
@@ -32,9 +45,15 @@
   const contextosArray = $derived(Object.values(CONTEXTOS));
   const favoritosContexto = $derived(favoritos.filter((o) => o.contexto === contextoActivo));
 
-  function contienePalabra(arr: string[], target: string): boolean {
-    return arr.includes(target);
-  }
+  // ── Catálogos de subcategorías por rol estructural ──
+  const SUBCAT_CAPA_MEDIA  = ['jersey', 'cardigan'] as const;
+  const SUBCAT_CALZADO_FORMAL = ['pump', 'botin', 'mocasin'] as const;
+  const SUBCAT_CALZADO_CASUAL = ['sneaker', 'balerina', 'mocasin', 'botin', 'sandalia'] as const;
+  const BASE_LIGERA       = ['camiseta', 'top', 'blusa'] as const;
+  const NEUTROS_UNIVERSALES = [
+    '#F5F1EA', '#FAF7F1', '#FFFFFF', '#FFF8B6',
+    '#2A2825', '#000000', '#1C1C1C', '#1F2A44', '#22344D', '#36454F',
+  ];
 
   // Filtrar prendas válidas para el contexto
   function aptaParaContexto(p: Prenda, ctx: Contexto): boolean {
@@ -47,84 +66,67 @@
     return prendas.filter((p) => p.categoria === cat);
   }
 
-  function pickRandom<T>(arr: T[]): T | null {
-    if (arr.length === 0) return null;
-    return arr[Math.floor(Math.random() * arr.length)];
+  function porSubcats(prendas: Prenda[], subs: readonly Subcategoria[]): Prenda[] {
+    return prendas.filter((p) => p.subcategoria && subs.includes(p.subcategoria));
   }
 
-  function pickRandomMultiple<T>(arr: T[], n: number): T[] {
+  // Selección ponderada: prendas con MENOS usos tienen MÁS probabilidad.
+  // Esto fuerza una rotación democrática del armario (no siempre el mismo blazer).
+  function pickWeighted(arr: Prenda[]): Prenda | null {
+    if (arr.length === 0) return null;
+    const weights = arr.map((p) => Math.max(1, 12 - p.usos));
+    const total = weights.reduce((a, b) => a + b, 0);
+    let r = Math.random() * total;
+    for (let i = 0; i < arr.length; i++) {
+      r -= weights[i];
+      if (r <= 0) return arr[i];
+    }
+    return arr[arr.length - 1];
+  }
+
+  // Múltiples sin duplicar subcategoría (no dos bolsos, no dos pañuelos)
+  function pickMultipleDistinct(arr: Prenda[], n: number): Prenda[] {
     if (arr.length <= n) return [...arr];
     const copia = [...arr];
-    const out: T[] = [];
-    while (out.length < n && copia.length > 0) {
-      const i = Math.floor(Math.random() * copia.length);
-      out.push(copia.splice(i, 1)[0]);
+    // Fisher-Yates shuffle
+    for (let i = copia.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copia[i], copia[j]] = [copia[j], copia[i]];
+    }
+    const out: Prenda[] = [];
+    const subsUsadas = new Set<string>();
+    for (const p of copia) {
+      const sub = p.subcategoria || '__none__';
+      if (subsUsadas.has(sub)) continue;
+      out.push(p);
+      subsUsadas.add(sub);
+      if (out.length >= n) break;
     }
     return out;
   }
 
-  function intentarPropuesta(): {
-    prendas: Prenda[]; esquema: EsquemaCromatico; explicacion: string;
-  } | null {
-    const aptas = closet.filter((p) => aptaParaContexto(p, contextoActivo));
-    if (aptas.length === 0) return null;
-
-    const vestidos = porCategoria(aptas, 'Vestido');
-    const tops = porCategoria(aptas, 'Top');
-    const bottoms = porCategoria(aptas, 'Bottom');
-    const abrigos = porCategoria(aptas, 'Abrigo');
-    const calzados = porCategoria(aptas, 'Calzado');
-    const accesorios = porCategoria(aptas, 'Accesorio');
-
-    const seleccion: Prenda[] = [];
-
-    // Vestido o Top+Bottom (50/50 si hay vestidos disponibles)
-    const usarVestido = vestidos.length > 0 && Math.random() < 0.4;
-    if (usarVestido) {
-      const v = pickRandom(vestidos);
-      if (v) seleccion.push(v);
-    } else {
-      const t = pickRandom(tops);
-      const b = pickRandom(bottoms);
-      if (t) seleccion.push(t);
-      if (b) seleccion.push(b);
+  function calzadoApto(p: Prenda, codigo: string): boolean {
+    const sub = p.subcategoria;
+    if (!sub) return true; // sin subcategoría, asumimos válido
+    if (codigo === 'formal' || codigo === 'cocktail') {
+      return SUBCAT_CALZADO_FORMAL.includes(sub as any);
     }
-
-    if (seleccion.length === 0) return null;
-
-    // Abrigo opcional (20% prob si hay)
-    if (abrigos.length > 0 && Math.random() < 0.25) {
-      const a = pickRandom(abrigos);
-      if (a) seleccion.push(a);
+    if (codigo === 'casual') {
+      return SUBCAT_CALZADO_CASUAL.includes(sub as any);
     }
+    return true; // smart-casual: todos
+  }
 
-    // Calzado
-    const c = pickRandom(calzados);
-    if (c) seleccion.push(c);
-
-    // Accesorios 1-2
-    const numAcc = accesorios.length === 0 ? 0 : (Math.random() < 0.5 ? 1 : 2);
-    seleccion.push(...pickRandomMultiple(accesorios, numAcc));
-
-    // Validación cromática
-    const colores = seleccion.map((p) => p.colorPrincipal);
-    const validacion = validarCombinacion(colores);
-
-    if (!validacion.valido) return null;
-
-    // Validar adecuación a la paleta del usuario (suave)
-    if (perfil) {
-      const paleta = PALETAS[perfil.estacion];
-      const tonosPaleta = [...paleta.neutros, ...paleta.acentos, ...paleta.statement];
-      const desviaciones = colores.filter((c) => !esCercanoAPaleta(c, tonosPaleta)).length;
-      // Tolerancia: hasta 1/3 de las piezas pueden desviarse de la paleta personal
-      if (desviaciones > Math.ceil(seleccion.length / 3)) return null;
-    }
-
-    const codigoCtx = CONTEXTOS[contextoActivo].codigo;
-    const explicacion = construirExplicacion(validacion.esquema, validacion.explicacion, codigoCtx);
-
-    return { prendas: seleccion, esquema: validacion.esquema, explicacion };
+  // Reglas de fit: máximo 1 prenda oversized, no wide-leg + oversized arriba
+  function fitHarmonico(piezas: Prenda[]): boolean {
+    const oversized = piezas.filter((p) => p.fit === 'oversized').length;
+    if (oversized > 1) return false;
+    const wideleg = piezas.find((p) => p.fit === 'wide-leg' && p.categoria === 'Bottom');
+    const oversizedArriba = piezas.find(
+      (p) => p.fit === 'oversized' && (p.categoria === 'Top' || p.categoria === 'Abrigo'),
+    );
+    if (wideleg && oversizedArriba) return false; // demasiado volumen total
+    return true;
   }
 
   function esCercanoAPaleta(hex: string, paleta: string[]): boolean {
@@ -137,18 +139,174 @@
     });
   }
 
-  function construirExplicacion(
-    esquema: EsquemaCromatico,
-    base: string,
+  function esNeutroUniversal(hex: string): boolean {
+    return NEUTROS_UNIVERSALES.some((u) => {
+      const [h1, , l1] = hexToHsl(hex);
+      const [h2, , l2] = hexToHsl(u);
+      const dh = Math.min(Math.abs(h1 - h2), 360 - Math.abs(h1 - h2));
+      return dh < 25 && Math.abs(l1 - l2) < 0.18;
+    });
+  }
+
+  function respetaPaletaEstricto(colores: string[]): boolean {
+    if (!perfil) return true;
+    const paleta = PALETAS[perfil.estacion];
+    const tonosPaleta = [...paleta.neutros, ...paleta.acentos, ...paleta.statement];
+    return colores.every((c) => esCercanoAPaleta(c, tonosPaleta) || esNeutroUniversal(c));
+  }
+
+  // ────────────────────────────────────────────────────────
+  // GENERADOR · jerarquía de capas + reglas de coherencia
+  // ────────────────────────────────────────────────────────
+  function intentarPropuesta(): {
+    prendas: Prenda[]; esquema: EsquemaCromatico; explicacion: string;
+  } | null {
+    const aptas = closet.filter((p) => aptaParaContexto(p, contextoActivo));
+    if (aptas.length === 0) return null;
+
+    const codigoCtx = CONTEXTOS[contextoActivo].codigo;
+    const seleccion: Prenda[] = [];
+    let baseEsVestido = false;
+
+    // ── CAPA 1 (base): Vestido o Top+Bottom ──
+    const vestidos = porCategoria(aptas, 'Vestido');
+    const tops = porCategoria(aptas, 'Top').filter(
+      (p) => !p.subcategoria || !SUBCAT_CAPA_MEDIA.includes(p.subcategoria as any),
+    );
+    const bottoms = porCategoria(aptas, 'Bottom');
+
+    // Sesgo: cocktail/formal favorece vestidos
+    const probVestido =
+      codigoCtx === 'cocktail' || codigoCtx === 'formal' ? 0.55 : 0.3;
+    const intentarVestido = vestidos.length > 0 && Math.random() < probVestido;
+
+    if (intentarVestido || tops.length === 0 || bottoms.length === 0) {
+      if (vestidos.length === 0) return null;
+      const v = pickWeighted(vestidos);
+      if (!v) return null;
+      seleccion.push(v);
+      baseEsVestido = true;
+    } else {
+      const t = pickWeighted(tops);
+      const b = pickWeighted(bottoms);
+      if (!t || !b) return null;
+      seleccion.push(t, b);
+    }
+
+    // ── CAPA 2 (media): jersey/cardigan, solo si base es ligera y no es vestido ──
+    if (!baseEsVestido) {
+      const baseTop = seleccion[0];
+      const baseEsLigera =
+        baseTop.subcategoria && BASE_LIGERA.includes(baseTop.subcategoria as any);
+      if (baseEsLigera) {
+        const candidatosMedia = porSubcats(porCategoria(aptas, 'Top'), SUBCAT_CAPA_MEDIA);
+        if (candidatosMedia.length > 0 && Math.random() < 0.35) {
+          const m = pickWeighted(candidatosMedia);
+          if (m) seleccion.push(m);
+        }
+      }
+    }
+
+    // ── CAPA 3 (exterior): blazer/trench/abrigo · probabilidad por código ──
+    const yaTieneMedia = seleccion.some(
+      (p) => p.subcategoria && SUBCAT_CAPA_MEDIA.includes(p.subcategoria as any),
+    );
+    const exteriores = porCategoria(aptas, 'Abrigo');
+    const probExterior =
+      codigoCtx === 'formal'       ? 0.85
+      : codigoCtx === 'cocktail'   ? 0.55
+      : codigoCtx === 'smart-casual' ? 0.4
+      : yaTieneMedia                 ? 0.15
+      :                                0.25;
+    if (exteriores.length > 0 && Math.random() < probExterior) {
+      const e = pickWeighted(exteriores);
+      if (e) seleccion.push(e);
+    }
+
+    // ── CALZADO coherente con el código ──
+    const calzadosAptos = porCategoria(aptas, 'Calzado').filter((p) =>
+      calzadoApto(p, codigoCtx),
+    );
+    const calzadosFallback = porCategoria(aptas, 'Calzado');
+    const pool = calzadosAptos.length > 0 ? calzadosAptos : calzadosFallback;
+    const c = pickWeighted(pool);
+    if (c) seleccion.push(c);
+
+    // ── ACCESORIOS (1-2, sin duplicar subcategoría) ──
+    const accesorios = porCategoria(aptas, 'Accesorio');
+    const numAcc =
+      accesorios.length === 0 ? 0
+      : codigoCtx === 'cocktail' || codigoCtx === 'formal' ? Math.min(2, accesorios.length)
+      : Math.random() < 0.6 ? 1 : 2;
+    if (numAcc > 0) seleccion.push(...pickMultipleDistinct(accesorios, numAcc));
+
+    // ── VALIDACIONES ──
+    // 1. Fit harmony
+    if (!fitHarmonico(seleccion)) return null;
+
+    // 2. Esquema cromático armónico
+    const colores = seleccion.map((p) => p.colorPrincipal);
+    const validacion = validarCombinacion(colores);
+    if (!validacion.valido) return null;
+
+    // 3. Paleta personal — estricta
+    if (!respetaPaletaEstricto(colores)) return null;
+
+    // ── Explicación rica ──
+    const explicacion = construirExplicacionRica(seleccion, validacion.esquema, validacion.explicacion, codigoCtx);
+
+    return { prendas: seleccion, esquema: validacion.esquema, explicacion };
+  }
+
+  function construirExplicacionRica(
+    piezas: Prenda[],
+    _esquema: EsquemaCromatico,
+    baseCromatica: string,
     codigo: string,
   ): string {
     const codigoLabel = ({
-      casual: 'casual relajado',
-      'smart-casual': 'smart casual',
-      cocktail: 'cocktail',
-      formal: 'formal',
+      casual:         'el casual relajado',
+      'smart-casual': 'el smart casual',
+      cocktail:       'el cocktail',
+      formal:         'la formalidad',
     } as Record<string, string>)[codigo] ?? codigo;
-    return `${base} Cumple el código ${codigoLabel} sin esfuerzo: cada pieza está alineada con la ocasión.`;
+
+    const partes: string[] = [baseCromatica];
+
+    // Cuenta capas (solo top/vestido/abrigo)
+    const numCapas = piezas.filter((p) =>
+      p.categoria === 'Top' || p.categoria === 'Vestido' || p.categoria === 'Abrigo',
+    ).length;
+    if (numCapas >= 3) {
+      partes.push(`Layering en ${numCapas} capas (base · intermedia · exterior) que conviven sin pelearse.`);
+    } else if (numCapas === 2) {
+      partes.push('Layering limpio: una capa de carácter sin saturar la silueta.');
+    }
+
+    // Detalle de fit
+    const fitsDistintos = new Set(piezas.map((p) => p.fit).filter(Boolean));
+    if (fitsDistintos.size > 1) {
+      partes.push('Combina volúmenes distintos para crear proporción.');
+    }
+
+    // Calzado coherente
+    const calzado = piezas.find((p) => p.categoria === 'Calzado');
+    if (calzado?.subcategoria) {
+      const labels: Record<string, string> = {
+        pump:     'pump',
+        mocasin:  'mocasín',
+        balerina: 'balerina',
+        botin:    'botín',
+        bota:     'bota',
+        sneaker:  'sneaker',
+        sandalia: 'sandalia',
+      };
+      const calLabel = labels[calzado.subcategoria] ?? calzado.subcategoria;
+      partes.push(`Cierra con ${calLabel}, alineado al código.`);
+    }
+
+    partes.push(`Adecuado para ${codigoLabel}.`);
+    return partes.join(' ');
   }
 
   async function regenerar() {
@@ -209,36 +367,38 @@
   }
 </script>
 
-<!-- Cabecera editorial + selector de contexto -->
-<header class="ed-page-head">
-  <div>
-    <p class="ed-eyebrow">CAPÍTULO · MI ESPACIO</p>
-    <h1 class="ed-page-head__title"><em>Generador</em> de outfits</h1>
-  </div>
-  <div class="ed-page-head__meta">
-    <span class="ed-mark">VOL · I</span>
-    <span class="ed-mark">SECCIÓN 02</span>
-  </div>
-  <p class="ed-page-head__lede">
-    Eliges un plan; el sistema lee tu closet, aplica reglas cromáticas y propone
-    una combinación coherente con tu paleta personal.
-  </p>
-</header>
+{#if !lockContexto}
+  <!-- Cabecera editorial + selector de contexto (modo standalone) -->
+  <header class="ed-page-head">
+    <div>
+      <p class="ed-eyebrow">CAPÍTULO · MI ESPACIO</p>
+      <h1 class="ed-page-head__title"><em>Generador</em> de outfits</h1>
+    </div>
+    <div class="ed-page-head__meta">
+      <span class="ed-mark">VOL · I</span>
+      <span class="ed-mark">SECCIÓN 02</span>
+    </div>
+    <p class="ed-page-head__lede">
+      Eliges un plan; el sistema lee tu closet, aplica reglas cromáticas y propone
+      una combinación coherente con tu paleta personal.
+    </p>
+  </header>
 
-<section class="contextos-bloque">
-  <p class="ed-eyebrow">¿QUÉ PLAN TIENES?</p>
-  <div class="contextos">
-    {#each contextosArray as c}
-      <button
-        class="chip {contextoActivo === c.id ? 'is-active--accent' : ''}"
-        onclick={() => cambiarContexto(c.id)}>
-        {c.nombre}
-      </button>
-    {/each}
-  </div>
-</section>
+  <section class="contextos-bloque">
+    <p class="ed-eyebrow">¿QUÉ PLAN TIENES?</p>
+    <div class="contextos">
+      {#each contextosArray as c}
+        <button
+          class="chip {contextoActivo === c.id ? 'is-active--accent' : ''}"
+          onclick={() => cambiarContexto(c.id)}>
+          {c.nombre}
+        </button>
+      {/each}
+    </div>
+  </section>
 
-<hr class="hr-hair" style="margin: var(--space-7) 0;" />
+  <hr class="hr-hair" style="margin: var(--space-7) 0;" />
+{/if}
 
 <!-- Propuesta -->
 {#if cargando}
