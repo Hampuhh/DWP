@@ -269,8 +269,32 @@ html, body {
 }
 
 /* ────────────────────────────────────────────────────────────
-   Rutas de app · esconder sidebar en mobile, dejar espacio para bottom-tabs
+   Rutas de app · layout SPA-feel (con template: splash)
    ──────────────────────────────────────────────────────────── */
+
+/* Hide el hero vacío en páginas splash de app (la propia página da su header) */
+html[data-app-route] .hero,
+html[data-app-route] [data-has-hero] .hero {
+  display: none;
+}
+
+/* Splash pone el contenido en una columna estrecha — para la app queremos
+   ancho completo (max ~80rem) */
+html[data-app-route] .main-pane > main {
+  max-width: none;
+}
+html[data-app-route] main .sl-container,
+html[data-app-route] [data-has-hero] main .sl-container {
+  max-width: 80rem;
+  padding-left: var(--sl-content-pad-x);
+  padding-right: var(--sl-content-pad-x);
+  margin-inline: auto;
+}
+
+/* Sin sidebar en splash → reset del layout en dos columnas */
+html[data-app-route] .main-frame .lg\:sl-flex {
+  grid-template-columns: 1fr;
+}
 
 @media (max-width: 768px) {
   html[data-app-route] body {
@@ -278,8 +302,6 @@ html, body {
     padding-bottom: calc(72px + env(safe-area-inset-bottom, 0));
   }
 }
-
-/* En desktop dejamos el sidebar incluso en rutas de app (no estorba) */
 
 /* ────────────────────────────────────────────────────────────
    ThemeSelect — modo oscuro toggle limpio

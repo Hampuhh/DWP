@@ -1,13 +1,25 @@
 ---
 title: Auto-diagnóstico
-description: Cómo identificar tu estación de color en casa con drapeados y luz natural.
+description: Wizard interactivo para inferir tu estación de color en 4 pasos.
 sidebar:
   order: 3
+template: doc
+tableOfContents: false
 ---
 
-> *"Wear the colors that are already in you."* — Christine Scaman
+import AutoDiagnostico from '../../components/AutoDiagnostico.svelte';
 
-## Identificar tu subtono de piel
+<AutoDiagnostico client:only="svelte" />
+
+---
+
+## Guía detallada (para validar el resultado)
+
+El wizard de arriba es una aproximación rápida basada en 4 observaciones.
+Si quieres entender qué hay detrás o quieres profundizar, esto es lo que hace
+un análisis serio.
+
+### Identificar tu subtono de piel
 
 Hazlo siempre con **luz natural difusa**, sin maquillaje, sin joyería, con un fondo neutro:
 
@@ -21,10 +33,7 @@ Hazlo siempre con **luz natural difusa**, sin maquillaje, sin joyería, con un f
    te satura, eres probablemente **oliva** (frecuente en pieles latinas e ibéricas). Suele encajar
    en *Soft Autumn*, *Soft Summer* o *True Autumn*.
 
-**Limitaciones**: nunca uses luz artificial cálida o fluorescente; cubre cabello teñido; combina al
-menos 3 tests buscando coincidencia.
-
-## Identificar tu valor y contraste personal
+### Identificar tu valor y contraste personal
 
 **Valor** — convierte una selfie sin maquillaje a blanco y negro y compara la luminosidad de piel,
 ojos y cabello en una escala 1-10.
@@ -41,7 +50,7 @@ ojos y cabello en una escala 1-10.
 > **Regla práctica:** replica cerca del rostro tu nivel de contraste natural. Contraste alto en la
 > ropa "tapa" a una persona de bajo contraste; contraste bajo "apaga" a una de alto.
 
-## Drapeados en casa
+### Drapeados en casa (para confirmar)
 
 **Materiales** — kit de drapeados (Etsy o asesoras hispanas), espejo grande, luz natural difusa (junto
 a ventana norte), cara limpia sin maquillaje, cabello cubierto con turbante gris, ropa cubierta con
@@ -49,14 +58,13 @@ capa gris, cuaderno para anotar.
 
 **Pasos**:
 
-1. Test temperatura — alterna oro y plata bajo el mentón; observa cuál ilumina y cuál acentúa
-   sombras.
+1. Test temperatura — alterna oro y plata bajo el mentón; observa cuál ilumina y cuál acentúa sombras.
 2. Test valor — dentro de la temperatura ganadora, alterna un color claro y uno oscuro.
 3. Test croma — alterna un color saturado y su versión desaturada.
 4. Drapeados estacionales por pares ("este o este"); fotografía y compara.
 5. Sub-estación — dentro de la estación ganadora, prueba las tres sub-estaciones.
 
-## Qué observar
+### Qué observar
 
 - Rostro iluminado vs opaco.
 - Ojeras atenuadas vs marcadas.
@@ -65,17 +73,12 @@ capa gris, cuaderno para anotar.
 - Mandíbula definida vs difusa.
 - Ojos brillantes vs velados.
 
-## Apps útiles
-
-Colorwise.me, Style DNA, Palette Hunt, PhotoDirector (HSL). Son **aproximaciones**, no sustituyen
-un análisis profesional.
-
-## Errores comunes
+### Errores comunes
 
 Luz artificial, maquillaje, ropa de color cerca del rostro, cabello teñido visible, fondo de color,
 hacer un solo test, filtros automáticos de cámara, confundir preferencia con favorecimiento.
 
-## Cuándo invertir en análisis profesional
+### Cuándo invertir en análisis profesional
 
 Si hay duda persistente entre estaciones vecinas, coloración atípica u oliva, vas a hacer un cambio
 capilar permanente, o vas a invertir en armario nuevo. **Sci\ART / 12 Blueprints** o **House of
