@@ -49,6 +49,13 @@ export default defineConfig({
           tag: 'script',
           content: `try { if (typeof localStorage !== 'undefined' && !localStorage.getItem('starlight-theme')) { localStorage.setItem('starlight-theme', 'light'); document.documentElement.dataset.theme = 'light'; } } catch(_) {}`,
         },
+        // Marca el <html> con data-app-route cuando estamos en una ruta de la app
+        // (mi-closet, generador, mi-paleta, favoritos, settings, outfits/*).
+        // Usado por CSS para ocultar el sidebar en mobile y dejar espacio al bottom-tabs.
+        {
+          tag: 'script',
+          content: `try { var p = location.pathname; if (/(mi-closet|generador|mi-paleta|favoritos|settings|outfits)/.test(p)) { document.documentElement.setAttribute('data-app-route', ''); } } catch(_) {}`,
+        },
         // ── PWA: manifest, theme color, iconos iOS y registro de service worker ─────
         { tag: 'link', attrs: { rel: 'manifest', href: `${base}manifest.webmanifest` } },
         { tag: 'meta', attrs: { name: 'theme-color', content: '#F5F1EA' } },
@@ -89,52 +96,56 @@ export default defineConfig({
       ],
       components: {
         Hero: './src/components/starlight/Hero.astro',
+        Footer: './src/components/starlight/Footer.astro',
       },
       pagination: false,
       lastUpdated: false,
       credits: false,
       sidebar: [
         {
-          label: 'MI ESPACIO',
+          label: 'LA APP',
           items: [
             { label: 'Bienvenida', link: '/' },
             { label: 'Mi closet', link: '/mi-closet' },
             { label: 'Generador de outfits', link: '/generador' },
             { label: 'Mis favoritos', link: '/favoritos' },
-            { label: 'Inspiración', link: '/inspiracion' },
           ],
         },
         {
-          label: 'ESENCIALES',
+          label: 'MI PERFIL',
           items: [
-            { label: 'Mi paleta de colores', link: '/mi-paleta' },
-            {
-              label: 'Las 12 estaciones',
-              items: [
-                { label: 'Visión general', link: '/estaciones' },
-                { label: 'Primaveras', link: '/estaciones/primaveras' },
-                { label: 'Veranos', link: '/estaciones/veranos' },
-                { label: 'Otoños', link: '/estaciones/otonos' },
-                { label: 'Inviernos', link: '/estaciones/inviernos' },
-              ],
-            },
+            { label: 'Mi paleta personal', link: '/mi-paleta' },
             { label: 'Auto-diagnóstico', link: '/auto-diagnostico' },
             { label: 'Mi tipo de figura', link: '/tipo-de-figura' },
             { label: 'Forma de rostro', link: '/forma-de-rostro' },
+            { label: 'Ajustes', link: '/settings' },
+          ],
+        },
+        {
+          label: 'COLORIMETRÍA',
+          collapsed: true,
+          items: [
+            { label: 'Las 12 estaciones', link: '/estaciones' },
+            { label: 'Primaveras', link: '/estaciones/primaveras' },
+            { label: 'Veranos', link: '/estaciones/veranos' },
+            { label: 'Otoños', link: '/estaciones/otonos' },
+            { label: 'Inviernos', link: '/estaciones/inviernos' },
           ],
         },
         {
           label: 'GUÍA DE VESTIR',
+          collapsed: true,
           items: [
             { label: 'Códigos de vestimenta', link: '/codigos-de-vestimenta' },
             { label: 'Teoría del color', link: '/teoria-del-color' },
-            { label: 'Combinaciones que funcionan', link: '/combinaciones' },
+            { label: 'Combinaciones', link: '/combinaciones' },
             { label: 'Estilos y arquetipos', link: '/estilos-y-arquetipos' },
             { label: 'Accesorios', link: '/accesorios' },
           ],
         },
         {
           label: 'MI ARMARIO',
+          collapsed: true,
           items: [
             { label: 'Prendas esenciales', link: '/prendas-esenciales' },
             { label: 'Calidad y telas', link: '/calidad-y-telas' },
@@ -143,16 +154,12 @@ export default defineConfig({
           ],
         },
         {
-          label: 'RECURSOS',
+          label: 'INSPIRACIÓN',
+          collapsed: true,
           items: [
+            { label: 'Moodboards y referentes', link: '/inspiracion' },
             { label: 'Libros', link: '/libros' },
             { label: 'Apps y marcas', link: '/apps-y-marcas' },
-          ],
-        },
-        {
-          label: 'AJUSTES',
-          items: [
-            { label: 'Ajustes', link: '/settings' },
           ],
         },
       ],

@@ -206,28 +206,36 @@ html, body {
 .site-title img { max-height: 36px; width: auto; }
 
 /* ────────────────────────────────────────────────────────────
-   Sidebar
+   Sidebar editorial (mejorado)
    ──────────────────────────────────────────────────────────── */
 
 .sidebar-pane {
   background: var(--color-crema);
-  border-right: var(--border-hairline);
+  border-right: 1px solid var(--color-negro);
 }
 
 .sidebar-content {
-  padding-top: var(--space-6);
+  padding-top: var(--space-7);
+  padding-bottom: var(--space-9);
 }
 
-/* Group labels (MI ESPACIO, ESENCIALES…) */
+/* Group labels (LA APP, MI PERFIL, …) */
 .sidebar-content details > summary > .group-label > .large,
 .sidebar-content > ul > li > details > summary > .group-label > .large,
 .sidebar-content > ul > li > span.large {
-  font-family: var(--font-sans);
-  font-size: 11px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
   font-weight: var(--weight-medium);
-  letter-spacing: var(--tracking-widest);
+  letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--color-negro-60);
+  color: var(--color-negro);
+  padding: 12px 4px 8px;
+  display: block;
+}
+
+/* Espacio entre grupos */
+.sidebar-content > ul > li {
+  margin-bottom: var(--space-6);
 }
 
 /* Sidebar link items */
@@ -237,20 +245,41 @@ html, body {
   font-weight: var(--weight-regular);
   color: var(--color-negro);
   border-radius: 0;
-  padding: 11px 12px;
+  padding: 10px 14px;
+  border-left: 2px solid transparent;
+  transition: all var(--motion-fast);
+  line-height: 1.4;
 }
-.sidebar-content a:hover { background: var(--color-negro-08); }
+.sidebar-content a:hover {
+  background: var(--color-marfil);
+  border-left-color: var(--color-linea);
+}
 
-/* Active link — serif italic terracota con borde izquierdo */
+/* Active link — serif italic terracota con borde izquierdo bold */
 .sidebar-content a[aria-current='page'] {
   background: var(--color-marfil);
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 17px;
+  font-size: 18px;
+  line-height: 1.2;
   color: var(--color-terracota);
-  border-left: 1px solid var(--color-terracota);
+  border-left: 2px solid var(--color-terracota);
   font-weight: var(--weight-medium);
+  padding: 10px 14px;
 }
+
+/* ────────────────────────────────────────────────────────────
+   Rutas de app · esconder sidebar en mobile, dejar espacio para bottom-tabs
+   ──────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  html[data-app-route] body {
+    /* el bottom-tabs es 64px aprox + safe-area */
+    padding-bottom: calc(72px + env(safe-area-inset-bottom, 0));
+  }
+}
+
+/* En desktop dejamos el sidebar incluso en rutas de app (no estorba) */
 
 /* ────────────────────────────────────────────────────────────
    ThemeSelect — modo oscuro toggle limpio

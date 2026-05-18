@@ -1,0 +1,8 @@
+---
+// Override de Starlight Footer · añade BottomTabs mobile
+import Default from '@astrojs/starlight/components/Footer.astro';
+import BottomTabs from '../BottomTabs.svelte';
+---
+
+<Default {...Astro.props}><slot /></Default>
+<BottomTabs client:only="svelte" />

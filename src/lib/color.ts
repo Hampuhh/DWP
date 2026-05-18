@@ -69,20 +69,22 @@ interface KMeansOpts {
   k?: number;
   maxIter?: number;
   sampleStep?: number;
+  /** Fracción central de la imagen a muestrear (0..1). Default 0.6 = 60% del centro. */
+  centerCrop?: number;
 }
 
 export async function extraerColorDominante(
   imageEl: HTMLImageElement | HTMLCanvasElement,
   opts: KMeansOpts = {},
 ): Promise<{ dominante: string; paleta: string[] }> {
-  const { k = 5, maxIter = 10, sampleStep = 8 } = opts;
+  const { k = 5, maxIter = 10, sampleStep = 4, centerCrop = 0.6 } = opts;
 
   let canvas: HTMLCanvasElement;
   if (imageEl instanceof HTMLCanvasElement) {
     canvas = imageEl;
   } else {
     canvas = document.createElement('canvas');
-    const targetW = 100;
+    const targetW = 120;
     const scale = targetW / imageEl.naturalWidth;
     canvas.width = targetW;
     canvas.height = Math.round(imageEl.naturalHeight * scale);
@@ -94,19 +96,45 @@ export async function extraerColorDominante(
   const ctx = canvas.getContext('2d', { willReadFrequently: true });
   if (!ctx) throw new Error('No 2d context');
   const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+  const W = canvas.width;
+  const H = canvas.height;
 
-  // Muestrear píxeles
-  const pixels: Rgb[] = [];
-  for (let i = 0; i < data.length; i += 4 * sampleStep) {
-    const a = data[i + 3];
-    if (a < 200) continue; // descartar transparente
-    const r = data[i], g = data[i + 1], b = data[i + 2];
-    // Descartar casi blancos puros (fondos) y casi negros puros
-    const max = Math.max(r, g, b), min = Math.min(r, g, b);
-    if (max > 248 && min > 248) continue;
-    if (max < 12) continue;
-    pixels.push([r, g, b]);
+  // Caja central — preferimos la prenda en el centro, ignoramos bordes
+  // (fondos de cama, pared, suelo de madera contaminan menos)
+  const inset = Math.max(0, Math.min(0.45, (1 - centerCrop) / 2));
+  const x0 = Math.floor(W * inset);
+  const x1 = Math.ceil(W * (1 - inset));
+  const y0 = Math.floor(H * inset);
+  const y1 = Math.ceil(H * (1 - inset));
+
+  function muestrearRect(xa: number, xb: number, ya: number, yb: number): Rgb[] {
+    const out: Rgb[] = [];
+    for (let y = ya; y < yb; y += sampleStep) {
+      for (let x = xa; x < xb; x += sampleStep) {
+        const i = (y * W + x) * 4;
+        const a = data[i + 3];
+        if (a < 200) continue;
+        const r = data[i], g = data[i + 1], b = data[i + 2];
+        const max = Math.max(r, g, b), min = Math.min(r, g, b);
+        // descartar casi blancos puros (fondos cremosos) y casi negros
+        if (max > 248 && min > 240) continue;
+        if (max < 12) continue;
+        out.push([r, g, b]);
+      }
+    }
+    return out;
   }
+
+  // Primer intento: solo el centro
+  let pixels: Rgb[] = muestrearRect(x0, x1, y0, y1);
+
+  // Fallback: si el centro tiene muy pocos píxeles utilizables (prenda
+  // pequeña o transparente), ampliar a todo el frame
+  const MIN_PIXELS = 80;
+  if (pixels.length < MIN_PIXELS) {
+    pixels = muestrearRect(0, W, 0, H);
+  }
+
   if (pixels.length === 0) return { dominante: '#888888', paleta: ['#888888'] };
 
   // Inicializar centroides con k-means++

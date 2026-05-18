@@ -2,6 +2,7 @@
 import { ArrowRight } from '@lucide/svelte';
 import SituationCard from './SituationCard.astro';
 import EntryCard from './EntryCard.astro';
+import Onboarding from '../Onboarding.svelte';
 
 const fechaEdicion = new Date().toLocaleDateString('es', {
   month: 'long',
@@ -62,6 +63,12 @@ const situaciones = [
     </a>
   </div>
 </section>
+
+<!-- ──────────────────────────────────────────────────────── -->
+<!-- I.5 ONBOARDING — guía de 3 pasos para usuaria nueva       -->
+<!-- (se hide solo cuando completaste los 3 pasos)             -->
+<!-- ──────────────────────────────────────────────────────── -->
+<Onboarding client:only="svelte" />
 
 <!-- ──────────────────────────────────────────────────────── -->
 <!-- II. ENTRADAS A LA APP — 3 tiles arriba ahora               -->
