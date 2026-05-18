@@ -1,17 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 60" width="360" height="60" aria-label="Diplomats wear prada">
-  <!-- Texto del logo: "Diplomats wear" en serif regular + "prada" en italic terracota -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 60" width="380" height="60" aria-label="The Diplomat wears Prada">
+  <!-- 'The Diplomat wears' regular + 'Prada' italic terracota + dot acento -->
   <text x="0" y="38"
         font-family="Cormorant Garamond, Georgia, serif"
         font-weight="500"
-        font-size="32"
+        font-size="30"
         letter-spacing="0.2"
-        fill="#2A2825">Diplomats wear</text>
-  <text x="218" y="38"
+        fill="#2A2825">The Diplomat wears</text>
+  <text x="246" y="38"
         font-family="Cormorant Garamond, Georgia, serif"
         font-style="italic"
         font-weight="500"
-        font-size="32"
-        fill="#B97A57">prada</text>
-  <!-- Dot terracota como acento editorial -->
-  <circle cx="313" cy="35" r="2.6" fill="#B97A57"/>
+        font-size="30"
+        fill="#B97A57">Prada</text>
+  <circle cx="334" cy="35" r="2.6" fill="#B97A57"/>
 </svg>

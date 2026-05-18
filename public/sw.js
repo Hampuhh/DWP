@@ -1,10 +1,10 @@
-// Diplomats wear prada — service worker minimalista
+// The Diplomat wears Prada — service worker minimalista
 // Estrategia:
 //  - Pre-cache del shell en install (rutas críticas)
 //  - Network-first para HTML (para ver actualizaciones)
 //  - Cache-first para assets (rápido, offline)
 
-const VERSION = 'dwp-v2-rebrand';
+const VERSION = 'tdwp-v3-bolder';
 const PRECACHE_URLS = [
   './',
   './mi-closet',

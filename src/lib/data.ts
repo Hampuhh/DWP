@@ -232,13 +232,81 @@ export const ESTACIONES_NOMBRE: Record<string, string> = {
 };
 
 export const OCASIONES_NOMBRE: Record<Ocasion, string> = {
-  casual:         'Casual',
-  'smart-casual': 'Smart casual',
-  cocktail:       'Cocktail',
-  formal:         'Formal',
-  noche:          'Noche',
-  viaje:          'Viaje',
-  deporte:        'Deporte',
+  casual:           'Casual',
+  'smart-casual':   'Smart casual',
+  cocktail:         'Cocktail',
+  formal:           'Formal',
+  noche:            'Noche',
+  oficina:          'Oficina',
+  'fin-de-semana':  'Fin de semana',
+  viaje:            'Viaje',
+  lluvia:           'Lluvia',
+  frio:             'Frío',
+  calor:            'Calor',
+  deporte:          'Deporte',
 };
 
 export const CATEGORIAS = ['Top', 'Bottom', 'Vestido', 'Abrigo', 'Calzado', 'Accesorio'] as const;
+
+import type { Categoria, Subcategoria, FitTag } from './types';
+
+// Subcategorías permitidas por cada categoría — usadas en el selector de la prenda
+export const SUBCATEGORIAS: Record<Categoria, { id: Subcategoria; label: string }[]> = {
+  Top: [
+    { id: 'camisa',    label: 'Camisa' },
+    { id: 'blusa',     label: 'Blusa' },
+    { id: 'camiseta',  label: 'Camiseta' },
+    { id: 'jersey',    label: 'Jersey / Punto' },
+    { id: 'cardigan',  label: 'Cardigan' },
+    { id: 'top',       label: 'Top (tirantes / corto)' },
+  ],
+  Bottom: [
+    { id: 'pantalon-vestir', label: 'Pantalón de vestir' },
+    { id: 'jeans',           label: 'Jeans' },
+    { id: 'falda',           label: 'Falda' },
+    { id: 'short',           label: 'Short' },
+    { id: 'leggings',        label: 'Leggings' },
+  ],
+  Vestido: [
+    { id: 'vestido-mini',  label: 'Mini' },
+    { id: 'vestido-midi',  label: 'Midi' },
+    { id: 'vestido-largo', label: 'Largo / Maxi' },
+    { id: 'wrap',          label: 'Wrap / Cruzado' },
+    { id: 'camisero',      label: 'Camisero' },
+    { id: 'shift',         label: 'Shift / Recto' },
+  ],
+  Abrigo: [
+    { id: 'blazer',    label: 'Blazer' },
+    { id: 'trench',    label: 'Trench' },
+    { id: 'abrigo',    label: 'Abrigo lana' },
+    { id: 'gabardina', label: 'Gabardina' },
+    { id: 'cazadora',  label: 'Cazadora / Bomber' },
+    { id: 'kimono',    label: 'Kimono / Ligero' },
+  ],
+  Calzado: [
+    { id: 'pump',     label: 'Pump / Salón' },
+    { id: 'mocasin',  label: 'Mocasín' },
+    { id: 'balerina', label: 'Balerina' },
+    { id: 'botin',    label: 'Botín' },
+    { id: 'bota',     label: 'Bota alta' },
+    { id: 'sneaker',  label: 'Sneaker' },
+    { id: 'sandalia', label: 'Sandalia' },
+  ],
+  Accesorio: [
+    { id: 'bolso',    label: 'Bolso' },
+    { id: 'panuelo',  label: 'Pañuelo / Fular' },
+    { id: 'cinturon', label: 'Cinturón' },
+    { id: 'joya',     label: 'Joya' },
+    { id: 'reloj',    label: 'Reloj' },
+    { id: 'gafas',    label: 'Gafas' },
+    { id: 'sombrero', label: 'Sombrero' },
+  ],
+};
+
+export const FIT_TAGS: { id: FitTag; label: string }[] = [
+  { id: 'fitted',    label: 'Entallado' },
+  { id: 'recto',     label: 'Recto' },
+  { id: 'oversized', label: 'Oversized' },
+  { id: 'wide-leg',  label: 'Wide-leg / Palazzo' },
+  { id: 'cropped',   label: 'Cropped' },
+];

@@ -1,6 +1,6 @@
 ---
 title: Bienvenida
-description: Diplomats wear prada — guía personal de imagen con closet digital interactivo.
+description: The Diplomat wears Prada — guía personal de imagen con closet digital interactivo.
 template: splash
 tableOfContents: false
 sidebar:

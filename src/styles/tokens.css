@@ -179,7 +179,7 @@ h1 em, h2 em, h3 em, h4 em, h5 em {
 }
 
 /* ────────────────────────────────────────────────────────────
-   COMPONENTES · botones
+   COMPONENTES · botones (versión bolder)
    ──────────────────────────────────────────────────────────── */
 
 .btn {
@@ -225,6 +225,17 @@ h1 em, h2 em, h3 em, h4 em, h5 em {
 }
 .btn--accent:hover {
   background: var(--color-terracota-deep);
+  filter: none;
+}
+
+/* Bold CTA — rojo Hermès, para acciones primarias críticas (Añadir prenda, Generar, etc.) */
+.btn--bold {
+  background: var(--color-rojo);
+  color: var(--color-marfil);
+  letter-spacing: 0.18em;
+}
+.btn--bold:hover {
+  background: var(--color-rojo-deep);
   filter: none;
 }
 

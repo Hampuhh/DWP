@@ -16,8 +16,29 @@ export type Ocasion =
   | 'cocktail'
   | 'formal'
   | 'noche'
+  | 'oficina'
+  | 'fin-de-semana'
   | 'viaje'
+  | 'lluvia'
+  | 'frio'
+  | 'calor'
   | 'deporte';
+
+export type Subcategoria =
+  // Top
+  | 'camisa' | 'blusa' | 'camiseta' | 'jersey' | 'cardigan' | 'top'
+  // Bottom
+  | 'pantalon-vestir' | 'jeans' | 'falda' | 'short' | 'leggings'
+  // Vestido
+  | 'vestido-mini' | 'vestido-midi' | 'vestido-largo' | 'wrap' | 'camisero' | 'shift'
+  // Abrigo
+  | 'blazer' | 'trench' | 'abrigo' | 'gabardina' | 'cazadora' | 'kimono'
+  // Calzado
+  | 'pump' | 'mocasin' | 'balerina' | 'botin' | 'bota' | 'sneaker' | 'sandalia'
+  // Accesorio
+  | 'bolso' | 'panuelo' | 'cinturon' | 'joya' | 'reloj' | 'gafas' | 'sombrero';
+
+export type FitTag = 'oversized' | 'fitted' | 'recto' | 'wide-leg' | 'cropped';
 
 export type Contexto =
   | 'cafe'
@@ -33,6 +54,8 @@ export interface Prenda {
   id: string;
   nombre: string;
   categoria: Categoria;
+  subcategoria?: Subcategoria;
+  fit?: FitTag;
   foto: string; // base64 dataURL
   colorPrincipal: string; // hex
   colorSecundario?: string;

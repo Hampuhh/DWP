@@ -269,7 +269,7 @@
         <button class="btn btn--secondary" onclick={() => meGusta(false)}>
           <Star size={14} strokeWidth={1.6} /> Guardar
         </button>
-        <button class="btn btn--accent" onclick={() => meGusta(true)}>
+        <button class="btn btn--bold" onclick={() => meGusta(true)}>
           <Heart size={14} strokeWidth={1.6} /> Usar hoy
         </button>
       </div>

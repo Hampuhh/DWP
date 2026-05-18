@@ -6,8 +6,8 @@
     Plus, Search, Camera, Trash2, X, Pencil, Download, Upload, Check,
     Shirt, Layers, Footprints, Watch,
   } from '@lucide/svelte';
-  import type { Categoria, Estacion, Ocasion, Prenda } from '~/lib/types';
-  import { CATEGORIAS, OCASIONES_NOMBRE } from '~/lib/data';
+  import type { Categoria, Estacion, FitTag, Ocasion, Prenda, Subcategoria } from '~/lib/types';
+  import { CATEGORIAS, FIT_TAGS, OCASIONES_NOMBRE, SUBCATEGORIAS } from '~/lib/data';
   import {
     getClosetCompleto, guardarPrenda, eliminarPrenda, incrementarUso,
     exportarBackup, importarBackup,
@@ -64,6 +64,8 @@
       id: '',
       nombre: '',
       categoria: 'Top' as Categoria,
+      subcategoria: '' as Subcategoria | '',
+      fit: '' as FitTag | '',
       foto: '',
       colorPrincipal: '#888888',
       colorSecundario: '',
@@ -100,6 +102,8 @@
       id: p.id,
       nombre: p.nombre,
       categoria: p.categoria,
+      subcategoria: p.subcategoria ?? '',
+      fit: p.fit ?? '',
       foto: p.foto,
       colorPrincipal: p.colorPrincipal,
       colorSecundario: p.colorSecundario ?? '',
@@ -194,6 +198,8 @@
       id: form.id || uuid(),
       nombre: form.nombre.trim(),
       categoria: form.categoria,
+      subcategoria: form.subcategoria || undefined,
+      fit: form.fit || undefined,
       foto: form.foto,
       colorPrincipal: form.colorPrincipal,
       colorSecundario: form.colorSecundario || undefined,
@@ -311,7 +317,7 @@
         bind:value={busqueda}
       />
     </label>
-    <button class="btn btn--accent btn--prom" onclick={abrirModalNueva}>
+    <button class="btn btn--bold btn--prom" onclick={abrirModalNueva}>
       <Plus size={16} strokeWidth={2} /> Añadir prenda
     </button>
   </div>
@@ -356,8 +362,8 @@
         color principal automáticamente. Con cinco piezas ya podés generar
         outfits coherentes desde tu armario real.
       </p>
-      <button class="btn btn--accent btn--prom" onclick={abrirModalNueva}>
-        <Plus size={16} strokeWidth={2} /> Añadir mi primera prenda
+      <button class="btn btn--bold btn--xl" onclick={abrirModalNueva}>
+        <Plus size={18} strokeWidth={2} /> Añadir mi primera prenda
       </button>
     </div>
 
@@ -496,8 +502,29 @@
           </label>
           <label>
             <span class="field-label">CATEGORÍA</span>
-            <select class="select" bind:value={form.categoria}>
+            <select class="select" bind:value={form.categoria} onchange={() => { form.subcategoria = ''; }}>
               {#each CATEGORIAS as cat}<option value={cat}>{cat}</option>{/each}
+            </select>
+          </label>
+        </div>
+
+        <div class="row">
+          <label>
+            <span class="field-label">SUBCATEGORÍA</span>
+            <select class="select" bind:value={form.subcategoria}>
+              <option value="">—</option>
+              {#each SUBCATEGORIAS[form.categoria] as sub}
+                <option value={sub.id}>{sub.label}</option>
+              {/each}
+            </select>
+          </label>
+          <label>
+            <span class="field-label">FIT</span>
+            <select class="select" bind:value={form.fit}>
+              <option value="">—</option>
+              {#each FIT_TAGS as f}
+                <option value={f.id}>{f.label}</option>
+              {/each}
             </select>
           </label>
         </div>

@@ -1,12 +1,13 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { Trash2, Save } from '@lucide/svelte';
+  import { Trash2, Save, Sparkles } from '@lucide/svelte';
   import type { EstacionColor, FormaRostro, PerfilCromatico, TipoFigura } from '~/lib/types';
   import { PALETAS } from '~/lib/data';
   import {
     getPerfilCromatico, guardarPerfilCromatico, borrarPerfilCromatico,
     getClosetCompleto, reemplazarClosetCompleto,
   } from '~/lib/storage';
+  import { generarSeedPrendas } from '~/lib/seed';
 
   let cargando = $state(true);
   let perfil = $state<PerfilCromatico>({
@@ -64,6 +65,18 @@
     closet.forEach((p) => p.usos = 0);
     await reemplazarClosetCompleto(closet);
     mostrarToast('Contadores reiniciados');
+  }
+
+  async function cargarSeed() {
+    const closetActual = await getClosetCompleto();
+    let mensaje = 'Esto añadirá 15 prendas de ejemplo a tu closet para que puedas probar el generador de outfits.';
+    if (closetActual.length > 0) {
+      mensaje += `\n\nYa tienes ${closetActual.length} prenda(s) catalogada(s). Las nuevas se sumarán (no reemplaza nada).`;
+    }
+    if (!confirm(mensaje + '\n\n¿Continuar?')) return;
+    const semilla = generarSeedPrendas();
+    await reemplazarClosetCompleto([...closetActual, ...semilla]);
+    mostrarToast(`15 prendas de ejemplo añadidas`, 3000);
   }
 
   function mostrarToast(msg: string, ms = 2000) {
@@ -145,6 +158,19 @@
     </div>
   </section>
 
+  <section class="bloque bloque--demo">
+    <h2 class="bloque__title">Prueba el sistema sin esfuerzo</h2>
+    <p class="bloque__lede">
+      ¿Quieres ver cómo funciona el generador de outfits sin tener que catalogar
+      tu propio armario primero? Cargá 15 prendas de ejemplo (capsule básica de
+      paleta tierra y neutros). Después puedes reemplazar cada foto por la
+      tuya, o eliminarlas en bloque cuando ya tengas las tuyas.
+    </p>
+    <button class="btn btn--bold btn--prom" onclick={cargarSeed}>
+      <Sparkles size={16} strokeWidth={1.6} /> Cargar 15 prendas de ejemplo
+    </button>
+  </section>
+
   <footer class="footer">
     <button class="btn btn--secondary" onclick={borrarTodo}>
       <Trash2 size={14} strokeWidth={1.6} /> Borrar perfil
@@ -173,6 +199,7 @@
     font-weight: var(--weight-medium); margin: 0 0 var(--space-3);
   }
   .bloque__lede { color: var(--color-negro-60); margin: 0 0 var(--space-5); max-width: 36rem; }
+  .bloque--demo { background: var(--color-crema); padding: var(--space-8); border: 1px solid var(--color-linea); }
 
   .chips { display: flex; gap: var(--space-2); flex-wrap: wrap; }
   .select { max-width: 320px; }

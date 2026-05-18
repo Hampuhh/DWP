@@ -1,4 +1,5 @@
 ---
+import { ArrowRight } from '@lucide/svelte';
 import SituationCard from './SituationCard.astro';
 import EntryCard from './EntryCard.astro';
 
@@ -20,11 +21,11 @@ const situaciones = [
 ---
 
 <!-- ──────────────────────────────────────────────────────── -->
-<!-- I. PORTADA — cover treatment                              -->
+<!-- I. PORTADA — cover treatment + CTA prominente             -->
 <!-- ──────────────────────────────────────────────────────── -->
 <section class="cover">
   <div class="cover__masthead">
-    <span class="ed-mark">DIPLOMATS WEAR PRADA</span>
+    <span class="ed-mark">THE DIPLOMAT WEARS PRADA</span>
     <span class="ed-mark cover__masthead-spine">VOL · I</span>
     <span class="ed-mark cover__masthead-date">{fechaEdicion}</span>
   </div>
@@ -50,55 +51,34 @@ const situaciones = [
       </ul>
     </div>
   </div>
+
+  <!-- CTA prominente, ROJO HERMÈS - entrada directa a la app -->
+  <div class="cover__cta-row">
+    <a class="btn btn--bold btn--xl" href="./mi-closet">
+      Abrir mi closet <ArrowRight size={18} strokeWidth={2} />
+    </a>
+    <a class="cover__cta-secondary" href="./generador">
+      o generar un outfit ahora →
+    </a>
+  </div>
 </section>
 
 <!-- ──────────────────────────────────────────────────────── -->
-<!-- II. PROPUESTA — asymmetric grid de situaciones            -->
+<!-- II. ENTRADAS A LA APP — 3 tiles arriba ahora               -->
 <!-- ──────────────────────────────────────────────────────── -->
-<hr class="ed-rule" data-num="II — PROPUESTA" />
-
-<section class="proposal">
-  <header class="proposal__head">
-    <p class="ed-eyebrow">PARA HOY</p>
-    <h2 class="ed-magazine proposal__title">
-      ¿Qué planes tienes <em>hoy</em>?
-    </h2>
-    <p class="proposal__lede">
-      Toca el plan más cercano a lo que vas a hacer. Te abre una selección
-      curada con piezas de tu propio closet —si ya las catalogaste— o
-      sugerencias filtradas por código de vestimenta.
-    </p>
-  </header>
-
-  <ol class="proposal__grid">
-    {situaciones.map((s, i) => (
-      <li class={`proposal__cell ${i === 0 ? 'is-feature' : ''} ${i === 5 ? 'is-dark' : ''}`}>
-        <SituationCard {...s} numero={String(i + 1).padStart(2, '0')} dark={i === 5} />
-      </li>
-    ))}
-  </ol>
-</section>
-
-<!-- ──────────────────────────────────────────────────────── -->
-<!-- III. PULL-QUOTE editorial                                 -->
-<!-- ──────────────────────────────────────────────────────── -->
-<blockquote class="ed-pullquote">
-  Vestir bien, mucho tiempo, las mismas piezas excelentes
-  <em>es el lujo silencioso</em> y la coherencia hecha forma.
-  <cite>El principio rector — Vol. I</cite>
-</blockquote>
-
-<!-- ──────────────────────────────────────────────────────── -->
-<!-- IV. ENTRADAS — 3 tiles editorial (con el del medio negro) -->
-<!-- ──────────────────────────────────────────────────────── -->
-<hr class="ed-rule" data-num="III — POR DÓNDE EMPEZAR" />
+<hr class="ed-rule" data-num="I — TU ESPACIO" />
 
 <section class="entries">
   <header class="entries__head">
-    <p class="ed-eyebrow">LA INFRAESTRUCTURA</p>
+    <p class="ed-eyebrow">LAS TRES HERRAMIENTAS</p>
     <h2 class="ed-magazine entries__title">
-      Tres puntos de <em>partida</em>.
+      Por dónde <em>empezar</em>.
     </h2>
+    <p class="entries__lede">
+      Lo más importante está aquí dentro. Cada herramienta vive en su propia
+      pestaña, pero conversan entre ellas: tu paleta filtra al generador, el
+      generador toma del closet, y los outfits favoritos quedan guardados.
+    </p>
   </header>
 
   <div class="entries__grid">
@@ -131,10 +111,52 @@ const situaciones = [
 </section>
 
 <!-- ──────────────────────────────────────────────────────── -->
+<!-- III. SECCIÓN NEGRO INVERSO — pull-quote dramático         -->
+<!-- ──────────────────────────────────────────────────────── -->
+<section class="dark-band">
+  <div class="dark-band__inner">
+    <p class="ed-eyebrow dark-band__eyebrow">EL PRINCIPIO</p>
+    <p class="dark-band__quote">
+      Vestir bien, mucho tiempo,<br>
+      las mismas piezas excelentes<br>
+      <em>es el lujo silencioso</em>
+    </p>
+    <p class="dark-band__cite">— Y la coherencia hecha forma.</p>
+  </div>
+</section>
+
+<!-- ──────────────────────────────────────────────────────── -->
+<!-- IV. PROPUESTA — situaciones (después, como secundario)    -->
+<!-- ──────────────────────────────────────────────────────── -->
+<hr class="ed-rule" data-num="II — PROPUESTA" />
+
+<section class="proposal">
+  <header class="proposal__head">
+    <p class="ed-eyebrow">PARA HOY</p>
+    <h2 class="ed-magazine proposal__title">
+      ¿Qué planes tienes <em>hoy</em>?
+    </h2>
+    <p class="proposal__lede">
+      Toca el plan más cercano a lo que vas a hacer. Te abre una selección
+      curada con piezas de tu propio closet —si ya las catalogaste— o
+      sugerencias filtradas por código de vestimenta.
+    </p>
+  </header>
+
+  <ol class="proposal__grid">
+    {situaciones.map((s, i) => (
+      <li class={`proposal__cell ${i === 0 ? 'is-feature' : ''} ${i === 5 ? 'is-dark' : ''}`}>
+        <SituationCard {...s} numero={String(i + 1).padStart(2, '0')} dark={i === 5} />
+      </li>
+    ))}
+  </ol>
+</section>
+
+<!-- ──────────────────────────────────────────────────────── -->
 <!-- V. CIERRE editorial                                       -->
 <!-- ──────────────────────────────────────────────────────── -->
-<section class="closing ed-counter">
-  <hr class="ed-rule" data-num="IV — CIERRE" />
+<section class="closing">
+  <hr class="ed-rule" data-num="III — CIERRE" />
   <div class="closing__body">
     <p class="ed-eyebrow">UN APUNTE FINAL</p>
     <p class="closing__text ed-dropcap">
@@ -144,11 +166,14 @@ const situaciones = [
       mes que viene. El armario silencioso es <em>una práctica</em>,
       no una compra.
     </p>
+    <a class="btn btn--bold btn--xl closing__cta" href="./mi-closet">
+      Empezar ahora <ArrowRight size={18} strokeWidth={2} />
+    </a>
   </div>
 </section>
 
 <footer class="ed-stamp">
-  <span class="ed-stamp__brand">Diplomats wear <em>prada</em></span>
+  <span class="ed-stamp__brand">The Diplomat wears <em>Prada</em></span>
   <span>VOL · I · {fechaEdicion.toUpperCase()}</span>
   <span>HECHO PARA TI · LOCAL</span>
 </footer>
@@ -157,10 +182,9 @@ const situaciones = [
   /* ── Cover layout ───────────────────────────────────────── */
   .cover {
     display: grid;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: auto 1fr auto auto;
     gap: var(--space-9);
-    padding: var(--space-12) 0 var(--space-13);
-    min-height: 78vh;
+    padding: var(--space-12) 0 var(--space-11);
     position: relative;
   }
 
@@ -170,10 +194,11 @@ const situaciones = [
     align-items: baseline;
     gap: var(--space-6);
     padding-bottom: var(--space-5);
-    border-bottom: 1px solid var(--color-negro);
+    border-bottom: 1.5px solid var(--color-negro);
   }
   .cover__masthead-spine {
-    color: var(--color-terracota);
+    color: var(--color-rojo);
+    font-weight: 700;
   }
 
   .cover__title {
@@ -225,7 +250,6 @@ const situaciones = [
     flex-direction: column;
     gap: var(--space-2);
     font-family: var(--font-serif);
-    font-style: italic;
     font-size: 17px;
     line-height: 1.4;
     color: var(--color-negro);
@@ -241,12 +265,111 @@ const situaciones = [
   .cover__roman {
     color: var(--color-terracota);
     font-style: italic;
-    font-variant-numeric: oldstyle-nums;
   }
+
+  /* CTA prominente del cover */
+  .cover__cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-7);
+    padding-top: var(--space-7);
+    border-top: 1px solid var(--color-linea);
+  }
+  .cover__cta-secondary {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--color-negro);
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-rojo);
+    padding-bottom: 2px;
+    transition: color var(--motion-base);
+  }
+  .cover__cta-secondary:hover { color: var(--color-rojo); }
 
   @media (max-width: 840px) {
     .cover__byline { grid-template-columns: 1fr; gap: var(--space-7); }
-    .cover { min-height: auto; padding: var(--space-9) 0 var(--space-11); }
+    .cover { padding: var(--space-9) 0 var(--space-10); }
+    .cover__cta-row { flex-direction: column; align-items: stretch; gap: var(--space-4); }
+  }
+
+  /* ── Entries layout ────────────────────────────────────── */
+  .entries__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-bottom: var(--space-9);
+  }
+  .entries__title {
+    margin: var(--space-2) 0 0;
+    color: var(--color-negro);
+  }
+  .entries__title em { font-style: italic; color: var(--color-terracota); }
+  .entries__lede {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--color-negro-60);
+    max-width: 38rem;
+    margin: var(--space-3) 0 0;
+  }
+
+  .entries__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--color-linea);
+    border: 1px solid var(--color-linea);
+  }
+  @media (max-width: 980px) {
+    .entries__grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── Dark band (negro inverso) ─────────────────────────── */
+  .dark-band {
+    margin: var(--space-12) calc(var(--space-7) * -1) var(--space-12);
+    padding: var(--space-13) var(--space-9);
+    background: var(--color-tinta);
+    color: var(--color-marfil);
+    text-align: center;
+    position: relative;
+  }
+  .dark-band__inner {
+    max-width: 56rem;
+    margin: 0 auto;
+  }
+  .dark-band__eyebrow {
+    color: var(--color-terracota-soft);
+    justify-content: center;
+  }
+  .dark-band__eyebrow::before {
+    background: var(--color-terracota-soft);
+  }
+  .dark-band__quote {
+    font-family: var(--font-serif);
+    font-size: clamp(32px, 5vw, 64px);
+    line-height: 1.1;
+    margin: var(--space-7) 0 var(--space-5);
+    color: var(--color-marfil);
+    font-weight: var(--weight-medium);
+    letter-spacing: -0.01em;
+  }
+  .dark-band__quote em {
+    font-style: italic;
+    color: var(--color-terracota-soft);
+  }
+  .dark-band__cite {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(245, 241, 234, 0.55);
+    margin: 0;
+  }
+
+  @media (max-width: 540px) {
+    .dark-band { padding: var(--space-9) var(--space-6); margin: var(--space-9) calc(var(--space-5) * -1); }
   }
 
   /* ── Proposal layout ───────────────────────────────────── */
@@ -275,17 +398,13 @@ const situaciones = [
     padding: 0;
     margin: 0;
     display: grid;
-    /* Asymmetric magazine spread: 6 cols x 2 rows */
     grid-template-columns: repeat(6, 1fr);
     grid-auto-rows: 220px;
     gap: 1px;
     background: var(--color-linea);
     border: 1px solid var(--color-linea);
   }
-  .proposal__cell {
-    display: contents;
-  }
-  /* Each tile occupies cells. Magazine layout: */
+  .proposal__cell { display: contents; }
   .proposal__cell:nth-child(1) :global(.ed-tile) { grid-column: span 3; grid-row: span 2; min-height: 100%; padding: var(--space-9); }
   .proposal__cell:nth-child(2) :global(.ed-tile) { grid-column: span 3; }
   .proposal__cell:nth-child(3) :global(.ed-tile) { grid-column: span 2; }
@@ -295,7 +414,6 @@ const situaciones = [
   .proposal__cell:nth-child(7) :global(.ed-tile) { grid-column: span 2; }
   .proposal__cell:nth-child(8) :global(.ed-tile) { grid-column: span 2; }
 
-  /* Featured cell gets larger typography */
   .proposal__cell.is-feature :global(.ed-tile__title) { font-size: clamp(30px, 3.6vw, 44px); }
   .proposal__cell.is-feature :global(.ed-tile__desc) { font-size: 15px; max-width: 32ch; }
   .proposal__cell.is-feature :global(.ed-tile__num) { font-size: 44px; }
@@ -316,46 +434,24 @@ const situaciones = [
     .proposal__cell:nth-child(n) :global(.ed-tile) { grid-column: span 1; padding: var(--space-6); }
   }
 
-  /* ── Entries layout ────────────────────────────────────── */
-  .entries__head {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-    margin-bottom: var(--space-9);
-  }
-  .entries__title {
-    margin: var(--space-2) 0 0;
-    color: var(--color-negro);
-  }
-  .entries__title em { font-style: italic; color: var(--color-terracota); }
-
-  .entries__grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--color-linea);
-    border: 1px solid var(--color-linea);
-  }
-  @media (max-width: 980px) {
-    .entries__grid { grid-template-columns: 1fr; }
-  }
-
   /* ── Closing ──────────────────────────────────────────── */
-  .closing {
-    margin-top: var(--space-12);
-  }
-  .closing__body {
-    max-width: 44rem;
-  }
+  .closing { margin-top: var(--space-12); }
+  .closing__body { max-width: 44rem; }
   .closing__text {
     font-family: var(--font-serif);
     font-size: clamp(20px, 2.4vw, 28px);
     line-height: 1.4;
     color: var(--color-negro);
-    margin: var(--space-5) 0 0;
+    margin: var(--space-5) 0 var(--space-7);
   }
-  .closing__text em {
-    font-style: italic;
-    color: var(--color-terracota);
+  .closing__text em { font-style: italic; color: var(--color-terracota); }
+  .closing__cta { display: inline-flex; }
+
+  /* ── Botones extra-large (xl) ─────────────────────────── */
+  :global(.btn--xl) {
+    padding: 20px 32px;
+    font-size: 14px;
+    letter-spacing: 0.18em;
+    min-height: 60px;
   }
 </style>

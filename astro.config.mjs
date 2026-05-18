@@ -26,8 +26,8 @@ export default defineConfig({
   integrations: [
     svelte(),
     starlight({
-      title: 'Diplomats wear prada',
-      description: 'Diplomats wear prada — guía personal de imagen, colorimetría y armario.',
+      title: 'The Diplomat wears Prada',
+      description: 'The Diplomat wears Prada — guía personal de imagen, colorimetría y armario.',
       defaultLocale: 'es',
       locales: {
         root: { label: 'Español', lang: 'es' },
