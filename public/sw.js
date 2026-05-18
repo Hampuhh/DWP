@@ -4,7 +4,7 @@
 //  - Network-first para HTML (para ver actualizaciones)
 //  - Cache-first para assets (rápido, offline)
 
-const VERSION = 'tdwp-v6-spa';
+const VERSION = 'tdwp-v7-dict';
 const PRECACHE_URLS = [
   './',
   './mi-closet',
