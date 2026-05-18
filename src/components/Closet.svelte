@@ -299,43 +299,45 @@
 </header>
 
 <!-- ────────────────────────────────────────────────── -->
-<!-- Toolbar -->
+<!-- Toolbar editorial · dos filas -->
 <!-- ────────────────────────────────────────────────── -->
-<header class="toolbar">
-  <div class="toolbar__search">
-    <Search size={16} strokeWidth={1.5} />
-    <input
-      class="toolbar__input"
-      type="search"
-      placeholder="Buscar en mi closet…"
-      bind:value={busqueda}
-    />
+<section class="closet-toolbar">
+  <div class="closet-toolbar__primary">
+    <label class="closet-search">
+      <Search size={16} strokeWidth={1.5} />
+      <input
+        type="search"
+        placeholder="Buscar en mi closet…"
+        bind:value={busqueda}
+      />
+    </label>
+    <button class="btn btn--accent btn--prom" onclick={abrirModalNueva}>
+      <Plus size={16} strokeWidth={2} /> Añadir prenda
+    </button>
   </div>
-  <div class="toolbar__chips">
-    <button
-      class="chip {filtroCategoria === 'todas' ? 'is-active' : ''}"
-      onclick={() => filtroCategoria = 'todas'}>Todas</button>
-    {#each CATEGORIAS as cat}
+
+  <div class="closet-toolbar__secondary">
+    <div class="closet-chips">
       <button
-        class="chip {filtroCategoria === cat ? 'is-active' : ''}"
-        onclick={() => filtroCategoria = cat}>{cat}</button>
-    {/each}
-  </div>
-  <div class="toolbar__acciones">
-    <button class="btn btn--secondary" onclick={() => importInput.click()}>
-      <Upload size={14} strokeWidth={1.6} /> Importar
-    </button>
-    <button class="btn btn--secondary" onclick={exportar}>
-      <Download size={14} strokeWidth={1.6} /> Backup
-    </button>
-    <button class="btn btn--accent" onclick={abrirModalNueva}>
-      <Plus size={14} strokeWidth={2} /> Añadir prenda
-    </button>
+        class="chip {filtroCategoria === 'todas' ? 'is-active' : ''}"
+        onclick={() => filtroCategoria = 'todas'}>Todas</button>
+      {#each CATEGORIAS as cat}
+        <button
+          class="chip {filtroCategoria === cat ? 'is-active' : ''}"
+          onclick={() => filtroCategoria = cat}>{cat}</button>
+      {/each}
+    </div>
+    <div class="closet-secondary-actions">
+      <button class="icon-action" title="Importar backup" onclick={() => importInput.click()}>
+        <Upload size={16} strokeWidth={1.6} /> <span>Importar</span>
+      </button>
+      <button class="icon-action" title="Descargar backup" onclick={exportar}>
+        <Download size={16} strokeWidth={1.6} /> <span>Backup</span>
+      </button>
+    </div>
   </div>
   <input bind:this={importInput} type="file" accept="application/json" onchange={onImportar} hidden />
-</header>
-
-<hr class="hr-hair" style="margin: var(--space-6) 0;" />
+</section>
 
 <!-- ────────────────────────────────────────────────── -->
 <!-- Grid o empty state -->
@@ -343,48 +345,79 @@
 {#if cargando}
   <p class="t-caption">Cargando tu closet…</p>
 {:else if prendas.length === 0}
-  <div class="empty">
-    <div class="empty__ilustracion">
-      <svg viewBox="0 0 120 120" width="120" height="120" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M30 35 L50 25 L60 30 L70 25 L90 35 L82 45 L82 95 L38 95 L38 45 Z" />
-        <path d="M50 25 Q60 18 70 25" />
-        <line x1="60" y1="30" x2="60" y2="50" />
-        <circle cx="60" cy="55" r="1.5" />
-      </svg>
+  <section class="closet-empty">
+    <div class="closet-empty__head">
+      <p class="ed-eyebrow">CAPÍTULO 01 — INICIO</p>
+      <h2 class="closet-empty__title">
+        Tu armario empieza con <em>una sola pieza</em>.
+      </h2>
+      <p class="closet-empty__lede">
+        Catalogá una prenda con foto, color y ocasión. El sistema detecta el
+        color principal automáticamente. Con cinco piezas ya podés generar
+        outfits coherentes desde tu armario real.
+      </p>
+      <button class="btn btn--accent btn--prom" onclick={abrirModalNueva}>
+        <Plus size={16} strokeWidth={2} /> Añadir mi primera prenda
+      </button>
     </div>
-    <h3 class="empty__title">Tu closet está <em>vacío</em></h3>
-    <p class="empty__lede">
-      Añade tu primera prenda con una foto y deja que el sistema detecte su color
-      principal. Con cinco piezas ya puedes generar outfits.
-    </p>
-    <button class="btn btn--primary" onclick={abrirModalNueva}>
-      <Plus size={14} strokeWidth={2} /> Añadir mi primera prenda
+
+    <hr class="ed-rule" data-num="POR DÓNDE EMPEZAR" />
+
+    <ol class="closet-empty__hints">
+      <li>
+        <span class="closet-empty__hints-num">01</span>
+        <h3>Luz natural difusa</h3>
+        <p>Ponete junto a una ventana sin sol directo. Fondo neutro: cama
+          blanca, pared crema, suelo de madera.</p>
+      </li>
+      <li>
+        <span class="closet-empty__hints-num">02</span>
+        <h3>Foto cuadrada</h3>
+        <p>Plana o colgada en una percha. La prenda entera, sin recortes,
+          ocupando casi todo el cuadro.</p>
+      </li>
+      <li>
+        <span class="closet-empty__hints-num">03</span>
+        <h3>Catalogá lo esencial</h3>
+        <p>Nombre, tela, categoría. Estaciones y ocasiones cuando sepas.
+          El color principal lo detecta el sistema.</p>
+      </li>
+    </ol>
+  </section>
+{:else if filtradas.length === 0}
+  <div class="closet-empty closet-empty--filter">
+    <p class="ed-eyebrow">SIN RESULTADOS</p>
+    <p>No hay prendas que coincidan con ese filtro o búsqueda.</p>
+    <button class="btn btn--secondary" onclick={() => { filtroCategoria = 'todas'; busqueda = ''; }}>
+      Limpiar filtros
     </button>
   </div>
-{:else if filtradas.length === 0}
-  <p class="t-caption">No hay prendas que coincidan con ese filtro.</p>
 {:else}
-  <ul class="grid">
-    {#each filtradas as p (p.id)}
+  <ol class="closet-grid">
+    {#each filtradas as p, i (p.id)}
       <li>
-        <button class="garment" onclick={() => abrirDetalle(p)}>
-          <div class="garment__media">
+        <button class="g-card" onclick={() => abrirDetalle(p)}>
+          <div class="g-card__media">
             {#if p.foto}
               <img src={p.foto} alt={p.nombre} loading="lazy" />
             {:else}
-              <div class="placeholder-img" style="height:100%;"></div>
+              <div class="placeholder-img" style="position:absolute;inset:0;"></div>
             {/if}
+            <span class="g-card__num">{String(i + 1).padStart(2, '0')}</span>
           </div>
-          <div class="garment__color-bar" style="background: {p.colorPrincipal};"></div>
-          <div class="garment__meta">
-            <span class="garment__nombre">{p.nombre}</span>
-            <span class="t-caption">{p.tela || p.categoria}</span>
-            <span class="t-mono">USOS · {p.usos}</span>
+          <div class="g-card__color-bar" style="background: {p.colorPrincipal};"></div>
+          <div class="g-card__meta">
+            <span class="g-card__cat">{p.categoria.toUpperCase()}</span>
+            <h3 class="g-card__name">{p.nombre}</h3>
+            <div class="g-card__foot">
+              <span class="g-card__tela">{p.tela || '—'}</span>
+              <span class="g-card__uses">USOS · {String(p.usos).padStart(2, '0')}</span>
+            </div>
           </div>
         </button>
       </li>
     {/each}
-  </ul>
+  </ol>
 {/if}
 
 <!-- ────────────────────────────────────────────────── -->
@@ -627,79 +660,283 @@
 {/if}
 
 <style>
-  .toolbar {
+  /* ── Toolbar editorial · dos filas ───────────────────── */
+  .closet-toolbar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    padding: var(--space-6) 0 var(--space-7);
+    border-bottom: 1px solid var(--color-negro);
+    margin-bottom: var(--space-9);
+  }
+  .closet-toolbar__primary {
     display: grid;
-    grid-template-columns: 320px 1fr auto;
-    gap: var(--space-6);
-    align-items: center;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-5);
+    align-items: stretch;
   }
-  .toolbar__search {
-    display: flex; align-items: center; gap: var(--space-2);
+  .closet-search {
+    display: flex; align-items: center; gap: var(--space-3);
     background: var(--color-crema);
-    border: var(--border-hairline);
+    border: 1px solid var(--color-linea);
     padding: 0 var(--space-4);
+    color: var(--color-negro-60);
+    transition: border-color var(--motion-fast);
   }
-  .toolbar__input {
-    flex: 1; background: transparent; border: none; outline: none;
-    padding: 12px 0; font-family: var(--font-sans); font-size: 14px; color: var(--color-negro);
+  .closet-search:focus-within { border-color: var(--color-negro); color: var(--color-negro); }
+  .closet-search input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 14px 0;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    color: var(--color-negro);
     min-height: 44px;
   }
-  .toolbar__chips { display: flex; gap: var(--space-2); flex-wrap: wrap; }
-  .toolbar__acciones { display: flex; gap: var(--space-3); }
+  .closet-search input::placeholder {
+    color: var(--color-negro-45);
+    font-style: italic;
+  }
+  .closet-toolbar__secondary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-5);
+    flex-wrap: wrap;
+  }
+  .closet-chips { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+  .closet-secondary-actions {
+    display: flex;
+    gap: var(--space-2);
+    margin-left: auto;
+  }
+  .icon-action {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 8px 14px;
+    background: transparent;
+    border: 1px solid var(--color-linea);
+    color: var(--color-negro-60);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    cursor: pointer;
+    min-height: 36px;
+    transition: all var(--motion-fast);
+  }
+  .icon-action:hover { color: var(--color-negro); border-color: var(--color-negro); }
+  .icon-action span { line-height: 1; }
 
-  @media (max-width: 900px) {
-    .toolbar {
-      grid-template-columns: 1fr;
-      gap: var(--space-4);
-    }
-    .toolbar__acciones { flex-wrap: wrap; }
+  @media (max-width: 720px) {
+    .closet-toolbar__primary { grid-template-columns: 1fr; }
+    .closet-toolbar__secondary { flex-direction: column; align-items: flex-start; }
+    .closet-secondary-actions { margin-left: 0; }
   }
 
-  .grid {
-    list-style: none; padding: 0; margin: 0;
+  /* ── Botón prominente (CTA principal) ────────────────── */
+  :global(.btn--prom) {
+    padding: 16px 28px;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    min-height: 52px;
+  }
+
+  /* ── Grid editorial con hairlines compartidas ────────── */
+  .closet-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: var(--space-6);
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1px;
+    background: var(--color-linea);
+    border: 1px solid var(--color-linea);
+  }
+  .closet-grid > li {
+    background: var(--color-marfil);
+    list-style: none;
+    counter-increment: none;
   }
   @media (max-width: 640px) {
-    .grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+    .closet-grid { grid-template-columns: repeat(2, 1fr); }
   }
-  .garment {
-    display: flex; flex-direction: column;
-    width: 100%; padding: 0; background: var(--color-marfil);
-    border: none; cursor: pointer; text-align: left;
-    transition: transform var(--motion-base);
-  }
-  .garment:hover { transform: translateY(-2px); }
-  .garment__media { aspect-ratio: 1 / 1; border: var(--border-hairline); overflow: hidden; }
-  .garment__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .garment__color-bar { height: 6px; width: 100%; }
-  .garment__meta {
-    padding: var(--space-3) var(--space-3) var(--space-4);
-    border: var(--border-hairline); border-top: none;
-    display: flex; flex-direction: column; gap: var(--space-1);
-  }
-  .garment__nombre {
-    font-family: var(--font-serif); font-size: var(--type-h5-size);
-    font-weight: var(--weight-medium);
+  @media (max-width: 420px) {
+    .closet-grid { grid-template-columns: 1fr; }
   }
 
-  /* Empty */
-  .empty {
-    padding: var(--space-12) var(--space-8);
-    text-align: center;
-    border: var(--border-dashed);
+  /* ── Garment card editorial ──────────────────────────── */
+  .g-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0;
+    background: var(--color-marfil);
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    transition: background var(--motion-base);
+  }
+  .g-card:hover { background: var(--color-crema); }
+  .g-card:hover .g-card__name { color: var(--color-terracota); }
+
+  .g-card__media {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
     background: var(--color-crema);
-    max-width: 32rem;
-    margin: 0 auto;
   }
-  .empty__ilustracion { color: var(--color-greige); margin: 0 auto var(--space-6); width: 120px; }
-  .empty__title {
-    font-family: var(--font-serif); font-size: var(--type-h3-size);
-    margin: 0 0 var(--space-4); color: var(--color-negro);
+  .g-card__media img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
   }
-  .empty__title :global(em) { font-style: italic; color: var(--color-terracota); }
-  .empty__lede { color: var(--color-negro-60); margin: 0 0 var(--space-7); }
+  .g-card__num {
+    position: absolute;
+    top: var(--space-3);
+    left: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    color: var(--color-marfil);
+    background: rgba(42, 40, 37, 0.7);
+    padding: 4px 8px;
+  }
+
+  .g-card__color-bar {
+    height: 6px;
+    width: 100%;
+  }
+
+  .g-card__meta {
+    padding: var(--space-4) var(--space-4) var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .g-card__cat {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.32em;
+    color: var(--color-negro-45);
+  }
+  .g-card__name {
+    font-family: var(--font-serif);
+    font-size: 21px;
+    line-height: 1.15;
+    font-weight: var(--weight-medium);
+    margin: 0;
+    color: var(--color-negro);
+    transition: color var(--motion-base);
+  }
+  .g-card__foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: var(--color-negro-60);
+  }
+  .g-card__tela {
+    text-transform: none;
+    font-family: var(--font-sans);
+    font-size: 11.5px;
+    font-style: italic;
+    color: var(--color-negro-60);
+    letter-spacing: 0;
+  }
+
+  /* ── Empty state editorial ───────────────────────────── */
+  .closet-empty {
+    padding: var(--space-12) 0;
+  }
+  .closet-empty__head {
+    max-width: 38rem;
+    margin-bottom: var(--space-12);
+  }
+  .closet-empty__title {
+    font-family: var(--font-serif);
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1.0;
+    letter-spacing: -0.01em;
+    font-weight: var(--weight-medium);
+    margin: var(--space-5) 0 var(--space-6);
+    color: var(--color-negro);
+  }
+  .closet-empty__title :global(em) {
+    font-style: italic;
+    color: var(--color-terracota);
+  }
+  .closet-empty__lede {
+    font-family: var(--font-serif);
+    font-size: clamp(18px, 1.8vw, 22px);
+    line-height: 1.5;
+    color: var(--color-negro);
+    margin: 0 0 var(--space-8);
+    max-width: 36rem;
+  }
+
+  .closet-empty__hints {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--color-linea);
+    border: 1px solid var(--color-linea);
+  }
+  .closet-empty__hints li {
+    padding: var(--space-8);
+    background: var(--color-marfil);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .closet-empty__hints-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    color: var(--color-terracota);
+  }
+  .closet-empty__hints h3 {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    line-height: 1.1;
+    font-weight: var(--weight-medium);
+    margin: 0;
+    color: var(--color-negro);
+  }
+  .closet-empty__hints p {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--color-negro-60);
+    margin: 0;
+  }
+  @media (max-width: 900px) {
+    .closet-empty__hints { grid-template-columns: 1fr; }
+  }
+
+  .closet-empty--filter {
+    padding: var(--space-9);
+    border: 1px dashed var(--color-linea);
+    background: var(--color-crema);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    align-items: flex-start;
+  }
+  .closet-empty--filter p {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    color: var(--color-negro);
+    margin: 0;
+  }
 
   /* Modal */
   .modal {

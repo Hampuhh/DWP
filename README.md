@@ -1,4 +1,4 @@
-# estilo
+# Diplomats wear *prada*
 
 Una plataforma personal y privada de imagen — colorimetría, closet digital y
 generador de outfits. Astro + Starlight + Svelte 5. Todo local, sin backend.

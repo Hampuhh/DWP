@@ -26,8 +26,8 @@ export default defineConfig({
   integrations: [
     svelte(),
     starlight({
-      title: 'estilo',
-      description: 'Tu estilo, tu manera — guía personal de imagen.',
+      title: 'Diplomats wear prada',
+      description: 'Diplomats wear prada — guía personal de imagen, colorimetría y armario.',
       defaultLocale: 'es',
       locales: {
         root: { label: 'Español', lang: 'es' },
@@ -54,7 +54,7 @@ export default defineConfig({
         { tag: 'meta', attrs: { name: 'theme-color', content: '#F5F1EA' } },
         { tag: 'meta', attrs: { name: 'apple-mobile-web-app-capable', content: 'yes' } },
         { tag: 'meta', attrs: { name: 'apple-mobile-web-app-status-bar-style', content: 'default' } },
-        { tag: 'meta', attrs: { name: 'apple-mobile-web-app-title', content: 'estilo' } },
+        { tag: 'meta', attrs: { name: 'apple-mobile-web-app-title', content: 'DWP' } },
         { tag: 'link', attrs: { rel: 'apple-touch-icon', sizes: '180x180', href: `${base}icons/apple-touch-icon-180.png` } },
         {
           tag: 'script',

@@ -29,8 +29,8 @@ const svgMaskable = (await readFile('public/icon.svg', 'utf8'))
   // Reduce la "e" para dejar safe area; mueve verticalmente para centrar el bloque
   .replace('font-size="380"', 'font-size="300"')
   .replace('y="358"', 'y="338"')
-  .replace('cx="376" cy="340" r="11"', 'cx="350" cy="324" r="9"')
-  .replace('font-size="18"', 'font-size="14"');
+  .replace('cx="382" cy="345" r="11"', 'cx="354" cy="328" r="9"')
+  .replace('font-size="20"', 'font-size="16"');
 
 for (const { name, size, maskable } of SIZES) {
   const input = maskable ? Buffer.from(svgMaskable) : svgBuffer;
